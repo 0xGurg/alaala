@@ -14,7 +14,11 @@ import (
 	"github.com/georgepagarigan/alaala/pkg/config"
 )
 
-const version = "0.1.0"
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
 
 func main() {
 	if len(os.Args) < 2 {
@@ -32,7 +36,7 @@ func main() {
 	case "init":
 		initProject()
 	case "version":
-		fmt.Printf("alaala version %s\n", version)
+		printVersion()
 	case "help", "--help", "-h":
 		printUsage()
 	default:
@@ -254,6 +258,16 @@ func initAIClient(cfg *config.Config) (memory.AIClient, error) {
 		return nil, fmt.Errorf("ollama provider not yet implemented")
 	default:
 		return nil, fmt.Errorf("unsupported AI provider: %s", cfg.AI.Provider)
+	}
+}
+
+func printVersion() {
+	fmt.Printf("alaala version %s\n", version)
+	if commit != "none" {
+		fmt.Printf("  commit: %s\n", commit)
+	}
+	if date != "unknown" {
+		fmt.Printf("  built:  %s\n", date)
 	}
 }
 

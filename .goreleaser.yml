@@ -1,0 +1,112 @@
+project_name: alaala
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+
+builds:
+  - id: alaala
+    main: ./cmd/alaala
+    binary: alaala
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - id: alaala
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+      - QUICKSTART.md
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - Merge pull request
+      - Merge branch
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: 'Enhancements'
+      regexp: "^.*enhancement[(\\w)]*:+.*$"
+      order: 2
+    - title: Others
+      order: 999
+
+release:
+  github:
+    owner: 0xGurg
+    name: alaala
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## ᜀᜎᜀᜎ {{ .Tag }}
+    
+    Semantic memory system for AI assistants.
+  footer: |
+    ## Installation
+    
+    ### Using Binary
+    
+    Download the appropriate binary for your platform and extract it:
+    
+    ```bash
+    # macOS (ARM64)
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_darwin_arm64.tar.gz | tar xz
+    
+    # macOS (AMD64)
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_darwin_amd64.tar.gz | tar xz
+    
+    # Linux (AMD64)
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_linux_amd64.tar.gz | tar xz
+    
+    # Linux (ARM64)
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_linux_arm64.tar.gz | tar xz
+    ```
+    
+    ### Verify Checksum
+    
+    ```bash
+    sha256sum -c checksums.txt
+    ```
+    
+    **Full Changelog**: https://github.com/0xGurg/alaala/compare/{{ .PreviousTag }}...{{ .Tag }}
+
