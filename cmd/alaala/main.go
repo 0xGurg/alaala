@@ -84,7 +84,7 @@ func serveMCP() {
 	fmt.Fprintf(os.Stderr, "Loaded config from: %s\n", config.GetConfigPath())
 	fmt.Fprintf(os.Stderr, "Storage mode: %s\n", cfg.Storage.Mode)
 	fmt.Fprintf(os.Stderr, "AI provider: %s\n", cfg.AI.Provider)
-	
+
 	// Initialize storage
 	sqlStore, err := initSQLiteStore(cfg)
 	if err != nil {
@@ -122,9 +122,9 @@ func serveMCP() {
 
 	// Start MCP server
 	mcpServer := mcp.NewServer(engine, curator)
-	
+
 	fmt.Fprintf(os.Stderr, "MCP server ready\n")
-	
+
 	if err := mcpServer.Run(); err != nil {
 		fmt.Fprintf(os.Stderr, "MCP server error: %v\n", err)
 		os.Exit(1)
@@ -133,7 +133,7 @@ func serveMCP() {
 
 func serveWeb() {
 	fmt.Println("Starting web UI...")
-	
+
 	// Load configuration
 	cfg, err := config.Load(config.GetConfigPath())
 	if err != nil {
@@ -147,14 +147,14 @@ func serveWeb() {
 	}
 
 	fmt.Printf("Web UI will be available at http://%s:%d\n", cfg.Web.Host, cfg.Web.Port)
-	
+
 	// TODO: Start web server
 	fmt.Println("Web server implementation coming soon...")
 }
 
 func initProject() {
 	fmt.Println("Initializing alaala project...")
-	
+
 	// Create .alaala-project.json
 	projectFile := ".alaala-project.json"
 	if _, err := os.Stat(projectFile); err == nil {
@@ -164,7 +164,7 @@ func initProject() {
 
 	cwd, _ := os.Getwd()
 	projectName := filepath.Base(cwd)
-	
+
 	projectConfig := fmt.Sprintf(`{
   "name": "%s",
   "created": "%s",
@@ -179,7 +179,7 @@ func initProject() {
 
 	fmt.Printf("Created %s\n", projectFile)
 	fmt.Println("Project initialized successfully!")
-	
+
 	// Create default config if it doesn't exist
 	cfgPath := config.GetConfigPath()
 	if _, err := os.Stat(cfgPath); os.IsNotExist(err) {
@@ -270,4 +270,3 @@ func printVersion() {
 		fmt.Printf("  built:  %s\n", date)
 	}
 }
-
