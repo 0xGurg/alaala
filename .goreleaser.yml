@@ -30,7 +30,6 @@ archives:
   - id: alaala
     name_template: >-
       {{ .ProjectName }}_
-      {{- .Version }}_
       {{- .Os }}_
       {{- .Arch }}
     format_overrides:
@@ -90,17 +89,23 @@ release:
     
     ```bash
     # macOS (ARM64)
-    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_darwin_arm64.tar.gz | tar xz
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_darwin_arm64.tar.gz | tar xz
+    sudo mv alaala /usr/local/bin/
     
     # macOS (AMD64)
-    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_darwin_amd64.tar.gz | tar xz
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_darwin_amd64.tar.gz | tar xz
+    sudo mv alaala /usr/local/bin/
     
     # Linux (AMD64)
-    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_linux_amd64.tar.gz | tar xz
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_linux_amd64.tar.gz | tar xz
+    sudo mv alaala /usr/local/bin/
     
     # Linux (ARM64)
-    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_{{ .Version }}_linux_arm64.tar.gz | tar xz
+    curl -L https://github.com/0xGurg/alaala/releases/download/{{ .Tag }}/alaala_linux_arm64.tar.gz | tar xz
+    sudo mv alaala /usr/local/bin/
     ```
+    
+    Or use the latest release: https://github.com/0xGurg/alaala/releases/latest
     
     ### Verify Checksum
     

@@ -24,21 +24,28 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 #### Option 1: Download Binary (Recommended)
 
+Download the latest release for your platform from [GitHub Releases](https://github.com/0xGurg/alaala/releases/latest):
+
 ```bash
 # macOS (ARM64)
-curl -L https://github.com/georgepagarigan/alaala/releases/latest/download/alaala-darwin-arm64 -o alaala
-chmod +x alaala
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_darwin_arm64.tar.gz | tar xz
 sudo mv alaala /usr/local/bin/
 
 # macOS (AMD64)
-curl -L https://github.com/georgepagarigan/alaala/releases/latest/download/alaala-darwin-amd64 -o alaala
-chmod +x alaala
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_darwin_amd64.tar.gz | tar xz
 sudo mv alaala /usr/local/bin/
 
-# Linux
-curl -L https://github.com/georgepagarigan/alaala/releases/latest/download/alaala-linux-amd64 -o alaala
-chmod +x alaala
+# Linux (AMD64)
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_amd64.tar.gz | tar xz
 sudo mv alaala /usr/local/bin/
+
+# Linux (ARM64)
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_arm64.tar.gz | tar xz
+sudo mv alaala /usr/local/bin/
+
+# Windows
+# Download from https://github.com/0xGurg/alaala/releases/latest
+# Extract and add to your PATH
 ```
 
 #### Option 2: Build from Source

@@ -4,19 +4,44 @@ Get alaala running in under 5 minutes!
 
 ## Prerequisites
 
-- Go 1.21+ installed
 - Docker installed (for Weaviate)
 - **Choose one AI provider:**
   - Anthropic API key (Claude - best quality), **OR**
   - OpenRouter API key (multiple models - flexible), **OR**
   - Ollama installed (local AI - private) - [ollama.ai](https://ollama.ai)
 
-## Step 1: Clone and Build
+## Step 1: Install alaala
+
+### Option A: Download Binary (Recommended)
 
 ```bash
-git clone https://github.com/georgepagarigan/alaala.git
+# macOS (ARM64)
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_darwin_arm64.tar.gz | tar xz
+sudo mv alaala /usr/local/bin/
+
+# macOS (Intel)
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_darwin_amd64.tar.gz | tar xz
+sudo mv alaala /usr/local/bin/
+
+# Linux (AMD64)
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_amd64.tar.gz | tar xz
+sudo mv alaala /usr/local/bin/
+
+# Linux (ARM64)
+curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_arm64.tar.gz | tar xz
+sudo mv alaala /usr/local/bin/
+
+# Verify installation
+alaala version
+```
+
+### Option B: Build from Source
+
+```bash
+git clone https://github.com/0xGurg/alaala.git
 cd alaala
 go build -o bin/alaala ./cmd/alaala
+sudo mv bin/alaala /usr/local/bin/
 ```
 
 ## Step 2: Setup Weaviate
@@ -91,17 +116,17 @@ This creates `.alaala-project.json` and `~/.alaala/config.yaml`.
 {
   "mcpServers": {
     "alaala": {
-      "command": "/Users/yourusername/alaala/bin/alaala",
+      "command": "/usr/local/bin/alaala",
       "args": ["serve"],
       "env": {
-        "ANTHROPIC_API_KEY": "sk-ant-..."
+        "OPENROUTER_API_KEY": "sk-or-v1-..."
       }
     }
   }
 }
 ```
 
-**Replace `/Users/yourusername/alaala/bin/alaala` with your actual path!**
+**Note:** Change to `ANTHROPIC_API_KEY` if using Claude, or remove `env` entirely if using Ollama (local).
 
 ## Step 5: Restart Cursor
 
