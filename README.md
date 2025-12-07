@@ -1,10 +1,10 @@
-# alaala 🧠
+# ᜀᜎᜀᜎ
 
 > _"alaala" (Tagalog for "memory") - A semantic memory system for AI assistants_
 
 A high-performance Go implementation of a semantic memory system that enables AI assistants to maintain context across sessions using the Model Context Protocol (MCP). Built with Weaviate for vector search, SQLite for metadata, and Claude AI for intelligent memory curation.
 
-## ✨ Features
+## Features
 
 - **MCP Protocol Integration** - Works seamlessly with Cursor, Claude Desktop, and other MCP-compatible clients
 - **Hybrid Memory Injection** - Auto-inject context at session start + dynamic updates on each prompt + on-demand searches
@@ -18,7 +18,7 @@ A high-performance Go implementation of a semantic memory system that enables AI
 - **Export/Import** - Backup and share memories in JSON format
 - **Web UI** (Coming Soon) - Beautiful neobrutalist interface with Kanagawa color palette
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -181,7 +181,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-## 📖 Usage
+## Usage
 
 ### Basic Commands
 
@@ -230,7 +230,7 @@ Once configured, alaala runs automatically in the background. The AI can:
 | `memory://session-context` | Current session context with relevant memories |
 | `memory://project-memories` | All memories for the current project |
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 alaala/
@@ -281,7 +281,7 @@ Each memory contains:
 }
 ```
 
-## 🎨 Upcoming Features
+## Upcoming Features
 
 - [x] Core memory engine with MCP
 - [x] SQLite + Weaviate integration
@@ -295,7 +295,7 @@ Each memory contains:
 - [ ] **Cross-project search**
 - [ ] **Homebrew formula** for easy installation
 
-## 🛠️ Development
+## Development
 
 ```bash
 # Clone repository
@@ -315,26 +315,26 @@ go build -o bin/alaala ./cmd/alaala
 ./bin/alaala serve
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## 📝 License
+## License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Inspired by [RLabs-Inc/memory](https://github.com/RLabs-Inc/memory)
 - Built with [Weaviate](https://weaviate.io/) for vector search
 - Powered by [Claude](https://www.anthropic.com/) for AI curation
 - Designed with [Kanagawa](https://github.com/rebelot/kanagawa.nvim) color palette
 
-## 📞 Support
+## Support
 
 - Issues: [GitHub Issues](https://github.com/georgepagarigan/alaala/issues)
 - Documentation: [Full docs](https://github.com/georgepagarigan/alaala/tree/main/docs)
 
 ---
 
-Made with ❤️ by [George Pagarigan](https://github.com/georgepagarigan)
+Made by [George Pagarigan](https://github.com/georgepagarigan)
