@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "alaala": {
+      "command": "/path/to/alaala",
+      "args": ["serve"],
+      "description": "Semantic memory system for AI assistants",
+      "env": {
+        "ANTHROPIC_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+

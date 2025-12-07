@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "alaala": {
+      "command": "/usr/local/bin/alaala",
+      "args": ["serve"],
+      "description": "Semantic memory system - maintains context across sessions",
+      "env": {
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+      }
+    }
+  }
+}
+

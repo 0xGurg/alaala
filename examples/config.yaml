@@ -1,0 +1,45 @@
+# Example alaala configuration file
+# Copy this to ~/.alaala/config.yaml and customize
+
+storage:
+  mode: docker  # "embedded" or "docker"
+  weaviate:
+    embedded_path: ~/.alaala/weaviate
+    docker_url: http://localhost:8080
+  sqlite_path: ~/.alaala/alaala.db
+
+ai:
+  provider: anthropic  # "anthropic" or "ollama" (local)
+  api_key: ${ANTHROPIC_API_KEY}  # Use environment variable or set directly (not needed for ollama)
+  model: claude-3-5-sonnet-20241022  # or "llama3.1", "mistral", etc. for ollama
+  ollama_url: http://localhost:11434  # Only needed if using ollama
+
+embeddings:
+  provider: local  # "local", "ollama", or "openai"
+  model: all-MiniLM-L6-v2  # or "nomic-embed-text" for ollama
+  ollama_url: http://localhost:11434  # Only needed if using ollama
+
+retrieval:
+  max_memories: 5  # Maximum memories to return in search
+  min_importance: 0.3  # Minimum importance threshold (0-1)
+  include_graph_depth: 1  # Depth to traverse memory relationships
+
+web:
+  enabled: true
+  port: 8766
+  host: localhost
+
+logging:
+  level: info  # "debug", "info", "warn", "error"
+  file: ~/.alaala/alaala.log
+
+# Example Ollama Configuration:
+# ai:
+#   provider: ollama
+#   model: llama3.1
+#   ollama_url: http://localhost:11434
+# embeddings:
+#   provider: ollama
+#   model: nomic-embed-text
+#   ollama_url: http://localhost:11434
+
