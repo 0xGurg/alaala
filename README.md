@@ -22,25 +22,18 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 ### Installation
 
-#### One-Line Install (Easiest)
+#### Homebrew (Recommended for macOS/Linux)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/install.sh | bash
+brew tap 0xGurg/alaala
+brew install alaala
 ```
 
-This will automatically detect your OS/architecture and install alaala to `/usr/local/bin`.
+That's it! Homebrew handles everything.
 
-For a more secure approach (review the script first):
-```bash
-curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/install.sh -o install.sh
-cat install.sh  # Review the script
-chmod +x install.sh
-./install.sh
-```
+#### Manual Binary Download
 
-#### Manual Download
-
-Download the latest release for your platform from [GitHub Releases](https://github.com/0xGurg/alaala/releases/latest):
+Download from [GitHub Releases](https://github.com/0xGurg/alaala/releases/latest):
 
 ```bash
 # macOS (ARM64)
@@ -58,23 +51,14 @@ sudo mv alaala /usr/local/bin/
 # Linux (ARM64)
 curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_arm64.tar.gz | tar xz
 sudo mv alaala /usr/local/bin/
-
-# Windows
-# Download from https://github.com/0xGurg/alaala/releases/latest
-# Extract and add to your PATH
 ```
 
 #### Build from Source
 
 ```bash
-# Clone the repository
-git clone https://github.com/georgepagarigan/alaala.git
+git clone https://github.com/0xGurg/alaala.git
 cd alaala
-
-# Build
 go build -o bin/alaala ./cmd/alaala
-
-# Install (optional)
 sudo mv bin/alaala /usr/local/bin/
 ```
 
@@ -320,22 +304,17 @@ Each memory contains:
 
 ## Uninstallation
 
-### Quick Uninstall
+### Using Homebrew
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/uninstall.sh | bash
+brew uninstall alaala
+brew untap 0xGurg/alaala  # Optional
 ```
 
-This provides an interactive menu to remove:
-- alaala binary
-- Configuration and data
-- Weaviate container
-- Optional backup before removal
-
-### Using the CLI
-
+To also remove data:
 ```bash
-alaala uninstall
+rm -rf ~/.alaala
+docker stop weaviate && docker rm weaviate  # If you set up Weaviate
 ```
 
 ### Manual Uninstall
@@ -348,8 +327,7 @@ sudo rm /usr/local/bin/alaala
 rm -rf ~/.alaala
 
 # Remove Weaviate container
-docker stop weaviate
-docker rm weaviate
+docker stop weaviate && docker rm weaviate
 ```
 
 ## Development

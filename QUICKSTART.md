@@ -12,15 +12,17 @@ Get alaala running in under 5 minutes!
 
 ## Step 1: Install alaala
 
-### One-Line Install (Easiest)
+### Using Homebrew (Easiest)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/install.sh | bash
+brew tap 0xGurg/alaala
+brew install alaala
+alaala version  # Verify
 ```
 
-This automatically detects your system and installs alaala.
+Done! Homebrew handles everything.
 
-### Manual Download
+### Manual Download (Alternative)
 
 ```bash
 # macOS (ARM64)
@@ -31,25 +33,12 @@ sudo mv alaala /usr/local/bin/
 curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_darwin_amd64.tar.gz | tar xz
 sudo mv alaala /usr/local/bin/
 
-# Linux (AMD64)
+# Linux
 curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_amd64.tar.gz | tar xz
 sudo mv alaala /usr/local/bin/
 
-# Linux (ARM64)
-curl -L https://github.com/0xGurg/alaala/releases/latest/download/alaala_linux_arm64.tar.gz | tar xz
-sudo mv alaala /usr/local/bin/
-
-# Verify installation
+# Verify
 alaala version
-```
-
-### Build from Source (Alternative)
-
-```bash
-git clone https://github.com/0xGurg/alaala.git
-cd alaala
-go build -o bin/alaala ./cmd/alaala
-sudo mv bin/alaala /usr/local/bin/
 ```
 
 ## Step 2: Setup Weaviate
@@ -196,24 +185,17 @@ Check Cursor logs or stderr output. Common issues:
 
 ## Uninstallation
 
-If you need to remove alaala:
-
-### Quick Uninstall
+### Using Homebrew
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/uninstall.sh | bash
+brew uninstall alaala
+brew untap 0xGurg/alaala
 ```
 
-Interactive menu lets you choose what to remove:
-- [1] Binary only
-- [2] Binary + configuration
-- [3] Everything (includes Weaviate)
-- [4] Backup + remove everything
-
-### Using CLI
-
+Remove data (optional):
 ```bash
-alaala uninstall
+rm -rf ~/.alaala
+docker stop weaviate && docker rm weaviate
 ```
 
 ### Manual Removal

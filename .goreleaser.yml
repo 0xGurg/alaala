@@ -66,6 +66,45 @@ changelog:
     - title: Others
       order: 999
 
+brews:
+  - name: alaala
+    repository:
+      owner: 0xGurg
+      name: homebrew-alaala
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    folder: Formula
+    homepage: "https://github.com/0xGurg/alaala"
+    description: "ᜀᜎᜀᜎ - Semantic memory system for AI assistants"
+    license: "MIT"
+    skip_upload: false
+    dependencies:
+      - name: docker
+        type: recommended
+    install: |
+      bin.install "alaala"
+    post_install: |
+      ohai "ᜀᜎᜀᜎ (alaala) installed successfully!"
+      puts ""
+      puts "Setup Weaviate for vector search:"
+      puts "  docker run -d --name weaviate -p 8080:8080 \\"
+      puts "    -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \\"
+      puts "    -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \\"
+      puts "    weaviate/weaviate:latest"
+      puts ""
+      puts "Quick start:"
+      puts "  1. Get OpenRouter API key: https://openrouter.ai (free tier available)"
+      puts "  2. alaala init"
+      puts "  3. Configure for Cursor - see README"
+    test: |
+      assert_match "alaala version", shell_output("#{bin}/alaala version")
+    caveats: |
+      Weaviate is required for vector search.
+      
+      Setup with Docker:
+        docker run -d --name weaviate -p 8080:8080 \
+          -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+          weaviate/weaviate:latest
+
 release:
   github:
     owner: 0xGurg
@@ -79,6 +118,13 @@ release:
     Semantic memory system for AI assistants.
   footer: |
     ## Installation
+    
+    ### Using Homebrew (Recommended)
+    
+    ```bash
+    brew tap 0xGurg/alaala
+    brew install alaala
+    ```
     
     ### Using Binary
     
