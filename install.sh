@@ -111,16 +111,35 @@ main() {
     
     # Download archive
     if command -v curl > /dev/null 2>&1; then
-        curl -fsSL "$DOWNLOAD_URL" -o "$TMP_DIR/$ARCHIVE_FILE"
+        if ! curl -fsSL "$DOWNLOAD_URL" -o "$TMP_DIR/$ARCHIVE_FILE"; then
+            print_error "Download failed from: $DOWNLOAD_URL"
+            echo ""
+            print_info "This might be because:"
+            echo "  1. The release is still being built (GitHub Actions takes a few minutes)"
+            echo "  2. The release hasn't been created yet"
+            echo ""
+            print_info "Alternative installation methods:"
+            echo "  1. Wait a few minutes and try again"
+            echo "  2. Check releases page: https://github.com/${REPO}/releases"
+            echo "  3. Build from source:"
+            echo "     git clone https://github.com/${REPO}.git"
+            echo "     cd alaala && go build -o bin/alaala ./cmd/alaala"
+            exit 1
+        fi
     elif command -v wget > /dev/null 2>&1; then
-        wget -q "$DOWNLOAD_URL" -O "$TMP_DIR/$ARCHIVE_FILE"
+        if ! wget -q "$DOWNLOAD_URL" -O "$TMP_DIR/$ARCHIVE_FILE"; then
+            print_error "Download failed from: $DOWNLOAD_URL"
+            echo ""
+            print_info "Please check: https://github.com/${REPO}/releases"
+            exit 1
+        fi
     else
         print_error "Neither curl nor wget is available. Please install one of them."
         exit 1
     fi
     
     if [ ! -f "$TMP_DIR/$ARCHIVE_FILE" ]; then
-        print_error "Download failed"
+        print_error "Download failed - file not found"
         exit 1
     fi
     
