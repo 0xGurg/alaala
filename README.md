@@ -22,7 +22,23 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 ### Installation
 
-#### Option 1: Download Binary (Recommended)
+#### One-Line Install (Easiest)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/install.sh | bash
+```
+
+This will automatically detect your OS/architecture and install alaala to `/usr/local/bin`.
+
+For a more secure approach (review the script first):
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/install.sh -o install.sh
+cat install.sh  # Review the script
+chmod +x install.sh
+./install.sh
+```
+
+#### Manual Download
 
 Download the latest release for your platform from [GitHub Releases](https://github.com/0xGurg/alaala/releases/latest):
 
@@ -48,7 +64,7 @@ sudo mv alaala /usr/local/bin/
 # Extract and add to your PATH
 ```
 
-#### Option 2: Build from Source
+#### Build from Source
 
 ```bash
 # Clone the repository

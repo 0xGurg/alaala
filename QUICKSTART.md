@@ -12,7 +12,15 @@ Get alaala running in under 5 minutes!
 
 ## Step 1: Install alaala
 
-### Option A: Download Binary (Recommended)
+### One-Line Install (Easiest)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/install.sh | bash
+```
+
+This automatically detects your system and installs alaala.
+
+### Manual Download
 
 ```bash
 # macOS (ARM64)
@@ -35,7 +43,7 @@ sudo mv alaala /usr/local/bin/
 alaala version
 ```
 
-### Option B: Build from Source
+### Build from Source (Alternative)
 
 ```bash
 git clone https://github.com/0xGurg/alaala.git
