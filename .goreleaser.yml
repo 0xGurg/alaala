@@ -70,8 +70,8 @@ brews:
   - name: alaala
     repository:
       owner: 0xGurg
-      name: alaala
-      branch: main
+      name: distillery
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     folder: Formula
     commit_author:
       name: goreleaserbot

@@ -33,7 +33,7 @@ class Alaala < Formula
   def post_install
     ohai "ᜀᜎᜀᜎ (alaala) installed successfully!"
     puts ""
-    puts "To set up Weaviate for vector search:"
+    puts "Setup Weaviate for vector search:"
     puts "  docker run -d --name weaviate -p 8080:8080 \\"
     puts "    -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \\"
     puts "    -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \\"
@@ -57,9 +57,6 @@ class Alaala < Formula
         docker run -d --name weaviate -p 8080:8080 \\
           -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \\
           weaviate/weaviate:latest
-      
-      Or use the helper script:
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
     EOS
   end
 

@@ -25,7 +25,8 @@ A high-performance Go implementation of a semantic memory system that enables AI
 #### Homebrew (Recommended for macOS/Linux)
 
 ```bash
-brew install https://raw.githubusercontent.com/0xGurg/alaala/main/Formula/alaala.rb
+brew tap 0xGurg/distillery
+brew install alaala
 ```
 
 That's it! Homebrew handles everything.
@@ -307,6 +308,7 @@ Each memory contains:
 
 ```bash
 brew uninstall alaala
+brew untap 0xGurg/distillery  # Optional
 ```
 
 To also remove data:

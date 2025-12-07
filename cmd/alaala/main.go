@@ -70,10 +70,10 @@ Examples:
   alaala init
 
 Installation:
-  brew install https://raw.githubusercontent.com/0xGurg/alaala/main/Formula/alaala.rb
+  brew tap 0xGurg/distillery && brew install alaala
 
 Uninstallation:
-  brew uninstall alaala
+  brew uninstall alaala && brew untap 0xGurg/distillery
 
 For more information, visit: https://github.com/0xGurg/alaala
 `)

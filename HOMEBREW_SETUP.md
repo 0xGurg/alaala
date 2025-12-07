@@ -1,91 +1,136 @@
-# Homebrew Setup - Simplified Approach
+# Homebrew Tap Setup Instructions
 
-## Using Main Repository
+## Using Existing Distillery Repository
 
-The Homebrew formula is stored directly in this repository under `Formula/alaala.rb`. No separate tap repository needed!
+Using your existing `0xGurg/distillery` repository as the Homebrew tap.
 
-## How It Works
-
-1. **Formula Location:** `Formula/alaala.rb` in the main repo
-2. **Installation:** Users install directly from the formula URL
-3. **Auto-Updates:** GoReleaser automatically updates the formula in this repo on each release
-
-## User Installation
-
-Users install with:
-```bash
-brew install https://raw.githubusercontent.com/0xGurg/alaala/main/Formula/alaala.rb
-```
-
-No need to `brew tap` first!
-
-## Setup Required
-
-### Add GitHub Token to Secrets (Optional)
-
-If you want GoReleaser to auto-update the formula:
-
-1. The workflow already has access to `GITHUB_TOKEN`
-2. No additional setup needed since we're using the same repo!
-
-GoReleaser will automatically commit formula updates to the `Formula/` directory on each release.
-
-## Testing
-
-After the v0.1.0 release completes (GitHub Actions finishes):
+### Step 1: Push Formula to Distillery Repository
 
 ```bash
-# Install
-brew install https://raw.githubusercontent.com/0xGurg/alaala/main/Formula/alaala.rb
+# Clone your distillery repository
+cd ~/projects
+git clone https://github.com/0xGurg/distillery.git
+cd distillery
 
-# Verify
-alaala version
+# Copy the prepared formula
+cp -r ~/projects/alaala/homebrew-tap/* .
 
-# Uninstall
-brew uninstall alaala
+# Add and push
+git add .
+git commit -m "Add alaala Homebrew formula"
+git push origin main
 ```
 
-## Updating the Formula
+### Step 3: Create GitHub Personal Access Token
 
-### Automatic (via GoReleaser)
+1. Go to https://github.com/settings/tokens/new
+2. Token name: `alaala-homebrew-tap`
+3. Select scopes:
+   - ✅ `repo` (Full control of private repositories)
+4. Click "Generate token"
+5. **Copy the token** (starts with `ghp_`)
 
-When you create a new release:
+### Step 4: Add Secret to alaala Repository
+
+1. Go to https://github.com/0xGurg/alaala/settings/secrets/actions
+2. Click "New repository secret"
+3. Name: `HOMEBREW_TAP_GITHUB_TOKEN`
+4. Value: Paste the token from Step 3
+5. Click "Add secret"
+
+### Step 5: Update Formula with SHA256 Checksums
+
+After the v0.1.0 release completes on GitHub Actions:
+
+1. Download the checksums:
+```bash
+curl -L https://github.com/0xGurg/alaala/releases/download/v0.1.0/checksums.txt
+```
+
+2. Update the formula in distillery:
+```bash
+cd ~/projects/distillery
+
+# Edit Formula/alaala.rb
+# Replace PLACEHOLDER_SHA256_* with actual SHA256 values from checksums.txt
+
+git add Formula/alaala.rb
+git commit -m "Update SHA256 checksums for alaala v0.1.0"
+git push origin main
+```
+
+### That's It!
+
+Users can now install with:
+```bash
+brew tap 0xGurg/distillery
+brew install alaala
+```
+
+### Auto-Updates on Future Releases
+
+From now on, when you create a new release:
 ```bash
 git tag -a v0.1.1 -m "Release v0.1.1"
 git push origin v0.1.1
 ```
 
-GoReleaser will:
+GoReleaser will automatically:
 1. Build binaries
-2. Update `Formula/alaala.rb` with new version and SHA256s
-3. Commit the changes to main branch
-4. Create GitHub release
+2. Update the formula in `homebrew-alaala` repo
+3. Create GitHub release
+4. Users get updates with `brew upgrade alaala`
 
-### Manual (if needed)
+## Testing Installation
 
-If you need to manually update the formula:
+After completing the steps above:
 
-1. Get the SHA256 checksums from the release
-2. Update `Formula/alaala.rb`:
-   - Change `version "x.x.x"`
-   - Update URLs to new version
-   - Update SHA256 values
-3. Commit and push
+```bash
+# Install
+brew tap 0xGurg/distillery
+brew install alaala
 
-## Benefits of This Approach
+# Verify
+alaala version
 
-- ✅ No separate repository to maintain
-- ✅ Formula lives with the code
-- ✅ Simpler workflow
-- ✅ Still get all Homebrew benefits
-- ✅ Users can install with one command
-- ✅ Auto-updates via GoReleaser
+# Uninstall (for testing)
+brew uninstall alaala
+brew untap 0xGurg/distillery
+```
 
-## Alternative: Official Tap (Future)
+## Troubleshooting
 
-Later, you can create a separate `homebrew-alaala` tap for:
-- Shorter install command: `brew tap 0xGurg/alaala && brew install alaala`
-- Multiple formulas in one tap
-- Professional appearance
+### "Formula not found"
+- Make sure the tap repository is public
+- Verify Formula/alaala.rb exists in the tap repo
+- Try `brew update` and try again
 
-But for now, the direct URL approach works perfectly!
+### "Checksum mismatch"
+- Update the SHA256 values in the formula
+- Get correct checksums from the release
+
+### "GoReleaser not updating formula"
+- Verify HOMEBREW_TAP_GITHUB_TOKEN is set correctly
+- Check GitHub Actions logs for errors
+- Ensure token has `repo` scope
+
+## File Structure
+
+After setup, you'll have:
+
+**Main repo (0xGurg/alaala):**
+- Source code
+- .goreleaser.yml (with brews section)
+- homebrew-tap/ (template for reference)
+
+**Tap repo (0xGurg/distillery):**
+- Formula/alaala.rb (auto-updated by GoReleaser)
+- README.md (optional)
+
+## Benefits
+
+- ✅ Clean command: `brew tap 0xGurg/distillery && brew install alaala`
+- ✅ Professional appearance
+- ✅ Standard Homebrew workflow
+- ✅ Automatic formula updates
+- ✅ Separate concerns (code vs distribution)
