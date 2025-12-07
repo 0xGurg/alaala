@@ -178,6 +178,31 @@ main() {
     print_success "Installation complete!"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
+    
+    # Check if Docker is available and offer to set up Weaviate
+    if command -v docker > /dev/null 2>&1; then
+        echo ""
+        print_info "Setup Weaviate for vector search? (y/n)"
+        read -r SETUP_WEAVIATE
+        
+        if [ "$SETUP_WEAVIATE" = "y" ] || [ "$SETUP_WEAVIATE" = "Y" ]; then
+            setup_weaviate
+        else
+            print_info "Skipping Weaviate setup."
+            echo ""
+            print_info "To set up Weaviate later, run:"
+            echo "  docker run -d --name weaviate -p 8080:8080 \\"
+            echo "    -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \\"
+            echo "    -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \\"
+            echo "    weaviate/weaviate:latest"
+            echo ""
+        fi
+    else
+        print_info "Docker not found. Weaviate requires Docker."
+        echo "  Install Docker: https://docs.docker.com/get-docker/"
+        echo ""
+    fi
+    
     echo "Quick start:"
     echo "  1. Get an API key from OpenRouter (free tier available):"
     echo "     https://openrouter.ai"
@@ -204,6 +229,58 @@ main() {
     echo "Documentation: https://github.com/$REPO"
     echo "Support: https://github.com/$REPO/issues"
     echo ""
+}
+
+# Setup Weaviate Docker container
+setup_weaviate() {
+    echo ""
+    print_info "Setting up Weaviate..."
+    
+    # Check if container already exists
+    if docker ps -a --format '{{.Names}}' | grep -q "^weaviate$"; then
+        print_info "Weaviate container already exists."
+        
+        # Check if it's running
+        if docker ps --format '{{.Names}}' | grep -q "^weaviate$"; then
+            print_success "Weaviate is already running!"
+        else
+            print_info "Starting existing Weaviate container..."
+            docker start weaviate
+            print_success "Weaviate started!"
+        fi
+    else
+        print_info "Creating Weaviate container..."
+        docker run -d \
+            --name weaviate \
+            -p 8080:8080 \
+            -e QUERY_DEFAULTS_LIMIT=25 \
+            -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+            -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+            -e DEFAULT_VECTORIZER_MODULE=none \
+            -e ENABLE_MODULES= \
+            weaviate/weaviate:latest
+        
+        print_info "Waiting for Weaviate to be ready..."
+        sleep 5
+        
+        # Check if Weaviate is ready
+        for i in {1..10}; do
+            if curl -s http://localhost:8080/v1/.well-known/ready > /dev/null 2>&1; then
+                print_success "Weaviate is ready!"
+                break
+            fi
+            if [ $i -eq 10 ]; then
+                print_error "Weaviate failed to start. Check logs with: docker logs weaviate"
+            else
+                sleep 2
+            fi
+        done
+    fi
+    
+    echo ""
+    print_success "Weaviate setup complete!"
+    echo "  Running at: http://localhost:8080"
+    echo "  Manage: docker start/stop weaviate"
 }
 
 main "$@"
