@@ -9,10 +9,11 @@ storage:
   sqlite_path: ~/.alaala/alaala.db
 
 ai:
-  provider: anthropic  # "anthropic" or "ollama" (local)
+  provider: anthropic  # "anthropic", "openrouter", or "ollama" (local)
   api_key: ${ANTHROPIC_API_KEY}  # Use environment variable or set directly (not needed for ollama)
-  model: claude-3-5-sonnet-20241022  # or "llama3.1", "mistral", etc. for ollama
+  model: claude-3-5-sonnet-20241022  # Model name (provider-specific)
   ollama_url: http://localhost:11434  # Only needed if using ollama
+  openrouter_url: https://openrouter.ai/api/v1  # Only needed if using openrouter (optional, uses default)
 
 embeddings:
   provider: local  # "local", "ollama", or "openai"
@@ -33,7 +34,7 @@ logging:
   level: info  # "debug", "info", "warn", "error"
   file: ~/.alaala/alaala.log
 
-# Example Ollama Configuration:
+# Example Ollama Configuration (Local, Private):
 # ai:
 #   provider: ollama
 #   model: llama3.1
@@ -42,4 +43,23 @@ logging:
 #   provider: ollama
 #   model: nomic-embed-text
 #   ollama_url: http://localhost:11434
+
+# Example OpenRouter Configuration (Multiple Models, Flexible):
+# ai:
+#   provider: openrouter
+#   api_key: ${OPENROUTER_API_KEY}
+#   model: anthropic/claude-3.5-sonnet  # Best quality
+#   # Other options:
+#   # model: openai/gpt-4-turbo         # Fast, reliable
+#   # model: meta-llama/llama-3.1-70b-instruct  # Cost-effective
+#   # model: google/gemini-pro-1.5      # Fast, cheap
+#   # model: mistralai/mistral-large    # European option
+#   openrouter_url: https://openrouter.ai/api/v1  # Optional
+
+# Popular OpenRouter Models for Memory Curation:
+# - anthropic/claude-3.5-sonnet: Best quality, ~$3/$15 per 1M tokens
+# - openai/gpt-4-turbo: Fast & reliable, ~$10/$30 per 1M tokens
+# - meta-llama/llama-3.1-70b-instruct: Cost-effective, ~$0.50/$0.80 per 1M tokens
+# - google/gemini-pro-1.5: Fast & cheap, ~$1.25/$5 per 1M tokens
+# - mistralai/mistral-large: European option, ~$2/$6 per 1M tokens
 

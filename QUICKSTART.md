@@ -6,9 +6,10 @@ Get alaala running in under 5 minutes!
 
 - Go 1.21+ installed
 - Docker installed (for Weaviate)
-- **Either:**
-  - Anthropic API key (for cloud AI), **OR**
-  - Ollama installed (for local AI) - [ollama.ai](https://ollama.ai)
+- **Choose one AI provider:**
+  - Anthropic API key (Claude - best quality), **OR**
+  - OpenRouter API key (multiple models - flexible), **OR**
+  - Ollama installed (local AI - private) - [ollama.ai](https://ollama.ai)
 
 ## Step 1: Clone and Build
 
@@ -30,14 +31,30 @@ This will start a Weaviate container on `http://localhost:8080`.
 
 Choose your AI provider:
 
-### Option A: Anthropic Claude (Cloud-based)
+### Option A: Anthropic Claude (Cloud, Best Quality)
 
 ```bash
 # Set your Anthropic API key
 export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
-### Option B: Ollama (Local, Private)
+### Option B: OpenRouter (Cloud, Multiple Models)
+
+```bash
+# Get API key from https://openrouter.ai
+export OPENROUTER_API_KEY="sk-or-v1-..."
+
+# Edit ~/.alaala/config.yaml and set:
+# ai:
+#   provider: openrouter
+#   model: anthropic/claude-3.5-sonnet
+#   # Or try other models:
+#   # model: openai/gpt-4-turbo
+#   # model: meta-llama/llama-3.1-70b-instruct
+#   # model: google/gemini-pro-1.5
+```
+
+### Option C: Ollama (Local, Private)
 
 ```bash
 # Install Ollama from https://ollama.ai

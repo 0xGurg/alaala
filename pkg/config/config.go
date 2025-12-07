@@ -33,9 +33,10 @@ type WeaviateConfig struct {
 
 // AIConfig holds AI provider configuration
 type AIConfig struct {
-	Provider string `yaml:"provider"` // "anthropic", "openai", "ollama"
-	APIKey   string `yaml:"api_key"`
-	Model    string `yaml:"model"`
+	Provider      string `yaml:"provider"` // "anthropic", "openai", "ollama", "openrouter"
+	APIKey        string `yaml:"api_key"`
+	Model         string `yaml:"model"`
+	OpenRouterURL string `yaml:"openrouter_url"` // Default: https://openrouter.ai/api/v1
 }
 
 // EmbeddingsConfig holds embeddings configuration
@@ -79,8 +80,9 @@ func DefaultConfig() *Config {
 			SQLitePath: filepath.Join(alaalaDir, "alaala.db"),
 		},
 		AI: AIConfig{
-			Provider: "anthropic",
-			Model:    "claude-3-5-sonnet-20241022",
+			Provider:      "anthropic",
+			Model:         "claude-3-5-sonnet-20241022",
+			OpenRouterURL: "https://openrouter.ai/api/v1",
 		},
 		Embeddings: EmbeddingsConfig{
 			Provider: "local",

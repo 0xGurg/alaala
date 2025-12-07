@@ -241,6 +241,17 @@ func initAIClient(cfg *config.Config) (memory.AIClient, error) {
 			return nil, fmt.Errorf("ANTHROPIC_API_KEY not set")
 		}
 		return ai.NewClaudeClient(apiKey, cfg.AI.Model), nil
+	case "openrouter":
+		apiKey := cfg.AI.APIKey
+		if apiKey == "" {
+			apiKey = os.Getenv("OPENROUTER_API_KEY")
+		}
+		if apiKey == "" {
+			return nil, fmt.Errorf("OPENROUTER_API_KEY not set")
+		}
+		return ai.NewOpenRouterClient(apiKey, cfg.AI.Model, cfg.AI.OpenRouterURL), nil
+	case "ollama":
+		return nil, fmt.Errorf("ollama provider not yet implemented")
 	default:
 		return nil, fmt.Errorf("unsupported AI provider: %s", cfg.AI.Provider)
 	}

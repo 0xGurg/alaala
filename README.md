@@ -8,7 +8,9 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 - **MCP Protocol Integration** - Works seamlessly with Cursor, Claude Desktop, and other MCP-compatible clients
 - **Hybrid Memory Injection** - Auto-inject context at session start + dynamic updates on each prompt + on-demand searches
-- **AI-Powered Curation** - Claude or Ollama analyzes conversation transcripts to extract meaningful insights
+- **AI-Powered Curation** - Claude, OpenRouter, or Ollama analyzes conversation transcripts to extract meaningful insights
+- **Multiple AI Providers** - Choose from Anthropic (cloud), OpenRouter (multi-model), or Ollama (local/private)
+- **Flexible Model Selection** - Access GPT-4, Claude, Llama, Gemini, and more through OpenRouter
 - **Local AI Support** - Use Ollama for completely private, local memory curation and embeddings
 - **Memory Graph** - Memories can reference and relate to each other (references, supersedes, related_to)
 - **Multi-Project Workspaces** - Automatic project isolation with separate memory spaces
@@ -95,10 +97,11 @@ storage:
   sqlite_path: ~/.alaala/alaala.db
 
 ai:
-  provider: anthropic  # or "ollama" for local AI
-  api_key: ${ANTHROPIC_API_KEY}  # not needed for ollama
-  model: claude-3-5-sonnet-20241022  # or "llama3.1" for ollama
+  provider: anthropic  # "anthropic", "openrouter", or "ollama"
+  api_key: ${ANTHROPIC_API_KEY}  # or ${OPENROUTER_API_KEY}, not needed for ollama
+  model: claude-3-5-sonnet-20241022  # provider-specific model name
   ollama_url: http://localhost:11434  # if using ollama
+  openrouter_url: https://openrouter.ai/api/v1  # if using openrouter (optional)
 
 embeddings:
   provider: local  # or "ollama" for local embeddings
@@ -127,7 +130,15 @@ logging:
 export ANTHROPIC_API_KEY="your-api-key-here"
 ```
 
-**Option B: Using Ollama (Local)**
+**Option B: Using OpenRouter (Multiple Models)**
+```bash
+export OPENROUTER_API_KEY="sk-or-v1-..."
+# Get your key from https://openrouter.ai
+# Update config.yaml to use provider: openrouter
+# Choose from: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo, meta-llama/llama-3.1-70b-instruct, etc.
+```
+
+**Option C: Using Ollama (Local)**
 ```bash
 # Install Ollama from https://ollama.ai
 ollama pull llama3.1
@@ -274,7 +285,8 @@ Each memory contains:
 
 - [x] Core memory engine with MCP
 - [x] SQLite + Weaviate integration
-- [x] AI-powered curation (Claude + Ollama)
+- [x] AI-powered curation (Claude + OpenRouter)
+- [x] **OpenRouter support** for multiple AI models (GPT-4, Claude, Llama, Gemini)
 - [x] **Ollama support** for local AI (documented, needs implementation)
 - [ ] **Web UI** with neobrutalism design
 - [ ] **Real embeddings** (currently using dummy embeddings)
