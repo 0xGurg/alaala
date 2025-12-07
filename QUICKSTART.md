@@ -209,18 +209,17 @@ docker stop weaviate && docker rm weaviate
 ## What's Next?
 
 - Read the full [README.md](README.md)
-- Check [STATUS.md](STATUS.md) for known limitations
+- Check [STATUS.md](docs/STATUS.md) for known limitations
 - See [CONTRIBUTING.md](CONTRIBUTING.md) to help improve alaala
-- Star the repo if you find it useful! ⭐
 
 ## Current Limitations
 
 **Note:** This is an early version with some limitations:
 
-- ❌ Vector search uses dummy embeddings (needs real implementation)
-- ❌ Semantic similarity doesn't work properly yet
-- ❌ No web UI yet
-- ✅ But: MCP integration, AI curation, and storage all work!
+- Vector search uses dummy embeddings (needs real implementation)
+- Semantic similarity doesn't work properly yet
+- No web UI yet
+- But: MCP integration, AI curation, and storage all work!
 
-See [STATUS.md](STATUS.md) for full details.
+See [docs/STATUS.md](docs/STATUS.md) for full details.
 

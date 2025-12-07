@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/georgepagarigan/alaala/internal/memory"
+	"github.com/0xGurg/alaala/internal/memory"
 )
 
 // Server implements the MCP (Model Context Protocol) server

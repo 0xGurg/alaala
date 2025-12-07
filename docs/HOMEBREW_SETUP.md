@@ -21,15 +21,19 @@ git commit -m "Add alaala Homebrew formula"
 git push origin main
 ```
 
-### Step 2: Create GitHub Personal Access Token
+### Step 2: Create Fine-Grained Personal Access Token
 
-1. Go to https://github.com/settings/tokens/new
+1. Go to https://github.com/settings/personal-access-tokens/new
 2. Token name: `alaala-homebrew-tap`
-3. Expiration: No expiration (or 1 year)
-4. Select scopes:
-   - ✅ `repo` (Full control of private repositories)
-5. Click "Generate token"
-6. **Copy the token** (starts with `ghp_`)
+3. Expiration: 1 year (recommended) or custom
+4. Repository access:
+   - Select: **Only select repositories**
+   - Choose: `0xGurg/distillery`
+5. Permissions:
+   - Repository permissions:
+     - ✅ Contents: **Read and write**
+6. Click "Generate token"
+7. **Copy the token** (starts with `github_pat_`)
 
 ### Step 3: Add Secret to alaala Repository
 

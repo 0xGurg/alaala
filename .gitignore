@@ -1,5 +1,6 @@
 # Binaries
 bin/
+alaala
 *.exe
 *.exe~
 *.dll
@@ -11,12 +12,14 @@ bin/
 
 # Output of the go coverage tool
 *.out
+coverage.txt
 
 # Dependency directories
 vendor/
 
 # Go workspace file
 go.work
+go.work.sum
 
 # IDE
 .vscode/
@@ -24,10 +27,15 @@ go.work
 *.swp
 *.swo
 *~
+.cursor/
 
 # OS
 .DS_Store
 Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 
 # alaala specific
 .alaala-project.json
@@ -40,3 +48,11 @@ Thumbs.db
 
 # Build artifacts
 dist/
+tmp/
+temp/
+
+# GoReleaser
+.goreleaser.yaml.backup
+
+# Homebrew (tap is maintained separately)
+# homebrew-tap/ is kept as template

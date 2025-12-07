@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/georgepagarigan/alaala/internal/ai"
-	"github.com/georgepagarigan/alaala/internal/embeddings"
-	"github.com/georgepagarigan/alaala/internal/mcp"
-	"github.com/georgepagarigan/alaala/internal/memory"
-	"github.com/georgepagarigan/alaala/internal/storage"
-	"github.com/georgepagarigan/alaala/pkg/config"
+	"github.com/0xGurg/alaala/internal/ai"
+	"github.com/0xGurg/alaala/internal/embeddings"
+	"github.com/0xGurg/alaala/internal/mcp"
+	"github.com/0xGurg/alaala/internal/memory"
+	"github.com/0xGurg/alaala/internal/storage"
+	"github.com/0xGurg/alaala/pkg/config"
 )
 
 var (

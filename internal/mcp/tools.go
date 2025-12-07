@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/georgepagarigan/alaala/internal/memory"
+	"github.com/0xGurg/alaala/internal/memory"
 )
 
 // Tool represents an MCP tool

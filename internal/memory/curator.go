@@ -3,7 +3,7 @@ package memory
 import (
 	"fmt"
 
-	"github.com/georgepagarigan/alaala/internal/ai"
+	"github.com/0xGurg/alaala/internal/ai"
 	"github.com/google/uuid"
 )
 

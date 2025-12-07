@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/georgepagarigan/alaala/internal/memory"
+	"github.com/0xGurg/alaala/internal/memory"
 )
 
 // Resource represents an MCP resource

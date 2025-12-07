@@ -218,7 +218,7 @@ func (c *OpenRouterClient) makeRequest(prompt string) (string, error) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.apiKey))
-	req.Header.Set("HTTP-Referer", "https://github.com/georgepagarigan/alaala") // Optional but recommended
+	req.Header.Set("HTTP-Referer", "https://github.com/0xGurg/alaala") // Optional but recommended
 	req.Header.Set("X-Title", "alaala") // Optional but recommended
 
 	resp, err := c.httpClient.Do(req)

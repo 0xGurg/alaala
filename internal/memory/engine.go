@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/georgepagarigan/alaala/internal/storage"
+	"github.com/0xGurg/alaala/internal/storage"
 )
 
 // Engine is the core memory management system

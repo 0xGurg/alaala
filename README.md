@@ -294,13 +294,13 @@ Each memory contains:
 - [x] SQLite + Weaviate integration
 - [x] AI-powered curation (Claude + OpenRouter)
 - [x] **OpenRouter support** for multiple AI models (GPT-4, Claude, Llama, Gemini)
+- [x] **Homebrew distribution** for easy installation
 - [x] **Ollama support** for local AI (documented, needs implementation)
 - [ ] **Web UI** with neobrutalism design
 - [ ] **Real embeddings** (currently using dummy embeddings)
 - [ ] **Memory graph visualization**
 - [ ] **Export/import functionality**
 - [ ] **Cross-project search**
-- [ ] **Homebrew formula** for easy installation
 
 ## Uninstallation
 
@@ -365,10 +365,19 @@ MIT License - see [LICENSE](LICENSE) for details.
 - Powered by [Claude](https://www.anthropic.com/) for AI curation
 - Designed with [Kanagawa](https://github.com/rebelot/kanagawa.nvim) color palette
 
+## Documentation
+
+- [Quick Start Guide](QUICKSTART.md) - Get started in 5 minutes
+- [Contributing Guide](CONTRIBUTING.md) - Help improve alaala
+- [Development Status](docs/STATUS.md) - Current implementation status
+- [OpenRouter Testing](docs/TESTING_OPENROUTER.md) - Test different AI models
+- [Homebrew Setup](docs/HOMEBREW_SETUP.md) - Set up distillery tap
+- [Implementation Plan](docs/alaala.md) - Original design document
+
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/georgepagarigan/alaala/issues)
-- Documentation: [Full docs](https://github.com/georgepagarigan/alaala/tree/main/docs)
+- Issues: [GitHub Issues](https://github.com/0xGurg/alaala/issues)
+- Discussions: [GitHub Discussions](https://github.com/0xGurg/alaala/discussions)
 
 ---
 
