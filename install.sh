@@ -229,6 +229,10 @@ main() {
     echo "Documentation: https://github.com/$REPO"
     echo "Support: https://github.com/$REPO/issues"
     echo ""
+    echo "To uninstall later:"
+    echo "  curl -fsSL https://raw.githubusercontent.com/$REPO/main/uninstall.sh | bash"
+    echo "  or: alaala uninstall"
+    echo ""
 }
 
 # Setup Weaviate Docker container

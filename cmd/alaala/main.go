@@ -35,6 +35,8 @@ func main() {
 		serveWeb()
 	case "init":
 		initProject()
+	case "uninstall":
+		uninstallCommand()
 	case "version":
 		printVersion()
 	case "help", "--help", "-h":
@@ -56,6 +58,7 @@ Commands:
   serve      Start the MCP server (for Cursor/Claude Desktop integration)
   web        Start the web UI server
   init       Initialize a new project with .alaala-project.json
+  uninstall  Uninstall alaala (interactive cleanup)
   version    Print version information
   help       Show this help message
 
@@ -68,6 +71,9 @@ Examples:
 
   # Initialize project
   alaala init
+
+  # Uninstall alaala
+  alaala uninstall
 
 For more information, visit: https://github.com/georgepagarigan/alaala
 `)
@@ -269,4 +275,27 @@ func printVersion() {
 	if date != "unknown" {
 		fmt.Printf("  built:  %s\n", date)
 	}
+}
+
+func uninstallCommand() {
+	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+	fmt.Println("  ᜀᜎᜀᜎ (alaala) Uninstaller")
+	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+	fmt.Println()
+	fmt.Println("For a complete interactive uninstall, please run:")
+	fmt.Println()
+	fmt.Println("  curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/uninstall.sh | bash")
+	fmt.Println()
+	fmt.Println("Or download and review the script first:")
+	fmt.Println()
+	fmt.Println("  curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/uninstall.sh -o uninstall.sh")
+	fmt.Println("  cat uninstall.sh  # Review")
+	fmt.Println("  chmod +x uninstall.sh")
+	fmt.Println("  ./uninstall.sh")
+	fmt.Println()
+	fmt.Println("Manual uninstall:")
+	fmt.Println("  sudo rm /usr/local/bin/alaala")
+	fmt.Println("  rm -rf ~/.alaala")
+	fmt.Println("  docker stop weaviate && docker rm weaviate")
+	fmt.Println()
 }

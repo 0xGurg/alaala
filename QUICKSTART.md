@@ -194,6 +194,36 @@ Check Cursor logs or stderr output. Common issues:
 - Missing API key
 - Weaviate not running
 
+## Uninstallation
+
+If you need to remove alaala:
+
+### Quick Uninstall
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/uninstall.sh | bash
+```
+
+Interactive menu lets you choose what to remove:
+- [1] Binary only
+- [2] Binary + configuration
+- [3] Everything (includes Weaviate)
+- [4] Backup + remove everything
+
+### Using CLI
+
+```bash
+alaala uninstall
+```
+
+### Manual Removal
+
+```bash
+sudo rm /usr/local/bin/alaala
+rm -rf ~/.alaala
+docker stop weaviate && docker rm weaviate
+```
+
 ## What's Next?
 
 - Read the full [README.md](README.md)

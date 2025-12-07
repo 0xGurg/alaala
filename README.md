@@ -318,11 +318,45 @@ Each memory contains:
 - [ ] **Cross-project search**
 - [ ] **Homebrew formula** for easy installation
 
+## Uninstallation
+
+### Quick Uninstall
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/uninstall.sh | bash
+```
+
+This provides an interactive menu to remove:
+- alaala binary
+- Configuration and data
+- Weaviate container
+- Optional backup before removal
+
+### Using the CLI
+
+```bash
+alaala uninstall
+```
+
+### Manual Uninstall
+
+```bash
+# Remove binary
+sudo rm /usr/local/bin/alaala
+
+# Remove data and config
+rm -rf ~/.alaala
+
+# Remove Weaviate container
+docker stop weaviate
+docker rm weaviate
+```
+
 ## Development
 
 ```bash
 # Clone repository
-git clone https://github.com/georgepagarigan/alaala.git
+git clone https://github.com/0xGurg/alaala.git
 cd alaala
 
 # Install dependencies
