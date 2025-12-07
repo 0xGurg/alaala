@@ -70,9 +70,13 @@ brews:
   - name: alaala
     repository:
       owner: 0xGurg
-      name: homebrew-alaala
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+      name: alaala
+      branch: main
     folder: Formula
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    commit_msg_template: "brew: update formula for {{ .Tag }}"
     homepage: "https://github.com/0xGurg/alaala"
     description: "ᜀᜎᜀᜎ - Semantic memory system for AI assistants"
     license: "MIT"

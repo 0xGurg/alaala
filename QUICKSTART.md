@@ -15,8 +15,7 @@ Get alaala running in under 5 minutes!
 ### Using Homebrew (Easiest)
 
 ```bash
-brew tap 0xGurg/alaala
-brew install alaala
+brew install https://raw.githubusercontent.com/0xGurg/alaala/main/Formula/alaala.rb
 alaala version  # Verify
 ```
 
@@ -189,7 +188,6 @@ Check Cursor logs or stderr output. Common issues:
 
 ```bash
 brew uninstall alaala
-brew untap 0xGurg/alaala
 ```
 
 Remove data (optional):

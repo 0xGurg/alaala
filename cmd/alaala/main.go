@@ -70,7 +70,7 @@ Examples:
   alaala init
 
 Installation:
-  brew tap 0xGurg/alaala && brew install alaala
+  brew install https://raw.githubusercontent.com/0xGurg/alaala/main/Formula/alaala.rb
 
 Uninstallation:
   brew uninstall alaala
