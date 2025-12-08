@@ -18,6 +18,13 @@ A high-performance Go implementation of a semantic memory system that enables AI
 - **Export/Import** - Backup and share memories in JSON format
 - **Web UI** (Coming Soon) - Beautiful neobrutalist interface with Kanagawa color palette
 
+## Prerequisites
+
+- **Docker** - Required for Weaviate vector database
+  - macOS: [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
+  - Linux: [Docker Engine](https://docs.docker.com/engine/install/)
+  - Windows: [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)
+
 ## Quick Start
 
 ### Installation
@@ -98,9 +105,7 @@ The default config is created at `~/.alaala/config.yaml`. Customize it:
 
 ```yaml
 storage:
-  mode: docker  # or "embedded"
-  weaviate:
-    docker_url: http://localhost:8080
+  weaviate_url: http://localhost:8080
   sqlite_path: ~/.alaala/alaala.db
 
 ai:

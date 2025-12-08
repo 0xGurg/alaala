@@ -2,10 +2,7 @@
 # Copy this to ~/.alaala/config.yaml and customize
 
 storage:
-  mode: docker  # "embedded" or "docker"
-  weaviate:
-    embedded_path: ~/.alaala/weaviate
-    docker_url: http://localhost:8080
+  weaviate_url: http://localhost:8080  # Docker Weaviate URL
   sqlite_path: ~/.alaala/alaala.db
 
 ai:

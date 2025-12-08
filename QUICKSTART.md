@@ -4,11 +4,12 @@ Get alaala running in under 5 minutes!
 
 ## Prerequisites
 
-- Docker installed (for Weaviate)
-- **Choose one AI provider:**
-  - Anthropic API key (Claude - best quality), **OR**
-  - OpenRouter API key (multiple models - flexible), **OR**
-  - Ollama installed (local AI - private) - [ollama.ai](https://ollama.ai)
+- **Docker** (Required) - For Weaviate vector database
+  - Install: [Docker Desktop](https://docs.docker.com/get-docker/)
+- **AI Provider** (Choose one):
+  - OpenRouter API key (recommended - free tier available): https://openrouter.ai
+  - Anthropic API key (Claude - best quality): https://console.anthropic.com
+  - Ollama (local AI - private): https://ollama.ai
 
 ## Step 1: Install alaala
 

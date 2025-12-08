@@ -6,7 +6,6 @@ import (
 
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/auth"
-	"github.com/weaviate/weaviate-go-client/v4/weaviate/filters"
 	"github.com/weaviate/weaviate/entities/models"
 )
 
@@ -214,43 +213,6 @@ func (w *WeaviateStore) Delete(id string) error {
 	}
 
 	return nil
-}
-
-// buildWhereFilter builds a Weaviate where filter from a map
-func (w *WeaviateStore) buildWhereFilter(filterMap map[string]interface{}) *filters.WhereBuilder {
-	if len(filterMap) == 0 {
-		return nil
-	}
-
-	var operands []*filters.WhereBuilder
-
-	for key, value := range filterMap {
-		switch key {
-		case "project_id":
-			operands = append(operands, filters.Where().
-				WithPath([]string{"projectId"}).
-				WithOperator(filters.Equal).
-				WithValueString(value.(string)))
-		case "importance_gte":
-			operands = append(operands, filters.Where().
-				WithPath([]string{"importance"}).
-				WithOperator(filters.GreaterThanEqual).
-				WithValueNumber(value.(float64)))
-		}
-	}
-
-	if len(operands) == 0 {
-		return nil
-	}
-
-	if len(operands) == 1 {
-		return operands[0]
-	}
-
-	// Combine with AND
-	return filters.Where().
-		WithOperator(filters.And).
-		WithOperands(operands)
 }
 
 // Close closes the Weaviate connection

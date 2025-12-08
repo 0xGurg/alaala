@@ -20,15 +20,8 @@ type Config struct {
 
 // StorageConfig holds storage-related configuration
 type StorageConfig struct {
-	Mode       string         `yaml:"mode"` // "embedded" or "docker"
-	Weaviate   WeaviateConfig `yaml:"weaviate"`
-	SQLitePath string         `yaml:"sqlite_path"`
-}
-
-// WeaviateConfig holds Weaviate-specific configuration
-type WeaviateConfig struct {
-	EmbeddedPath string `yaml:"embedded_path"`
-	DockerURL    string `yaml:"docker_url"`
+	WeaviateURL string `yaml:"weaviate_url"`
+	SQLitePath  string `yaml:"sqlite_path"`
 }
 
 // AIConfig holds AI provider configuration
@@ -72,12 +65,8 @@ func DefaultConfig() *Config {
 
 	return &Config{
 		Storage: StorageConfig{
-			Mode: "embedded",
-			Weaviate: WeaviateConfig{
-				EmbeddedPath: filepath.Join(alaalaDir, "weaviate"),
-				DockerURL:    "http://localhost:8080",
-			},
-			SQLitePath: filepath.Join(alaalaDir, "alaala.db"),
+			WeaviateURL: "http://localhost:8080",
+			SQLitePath:  filepath.Join(alaalaDir, "alaala.db"),
 		},
 		AI: AIConfig{
 			Provider:      "anthropic",

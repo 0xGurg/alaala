@@ -276,7 +276,7 @@ func (s *SQLiteStore) CreateMemory(memory *Memory) error {
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback()
+	defer func() { _ = tx.Rollback() }()
 
 	now := time.Now()
 	memory.CreatedAt = now

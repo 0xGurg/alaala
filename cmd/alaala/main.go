@@ -88,7 +88,7 @@ func serveMCP() {
 	}
 
 	fmt.Fprintf(os.Stderr, "Loaded config from: %s\n", config.GetConfigPath())
-	fmt.Fprintf(os.Stderr, "Storage mode: %s\n", cfg.Storage.Mode)
+	fmt.Fprintf(os.Stderr, "Weaviate URL: %s\n", cfg.Storage.WeaviateURL)
 	fmt.Fprintf(os.Stderr, "AI provider: %s\n", cfg.AI.Provider)
 
 	// Initialize storage
@@ -211,26 +211,22 @@ func initSQLiteStore(cfg *config.Config) (*storage.SQLiteStore, error) {
 }
 
 func initWeaviateStore(cfg *config.Config) (*storage.WeaviateStore, error) {
-	if cfg.Storage.Mode == "embedded" {
-		// TODO: Implement embedded Weaviate support
-		// For now, use Docker mode with localhost
-		return storage.NewWeaviateStore("localhost:8080", "http")
+	// Parse Weaviate URL
+	url := cfg.Storage.WeaviateURL
+	if url == "" {
+		url = "http://localhost:8080"
 	}
 
-	// Parse Docker URL
 	host := "localhost:8080"
 	scheme := "http"
-	if cfg.Storage.Weaviate.DockerURL != "" {
-		// Simple parsing - in production, use proper URL parsing
-		if len(cfg.Storage.Weaviate.DockerURL) > 7 {
-			if cfg.Storage.Weaviate.DockerURL[:8] == "https://" {
-				scheme = "https"
-				host = cfg.Storage.Weaviate.DockerURL[8:]
-			} else if cfg.Storage.Weaviate.DockerURL[:7] == "http://" {
-				scheme = "http"
-				host = cfg.Storage.Weaviate.DockerURL[7:]
-			}
-		}
+
+	// Simple URL parsing
+	if len(url) > 8 && url[:8] == "https://" {
+		scheme = "https"
+		host = url[8:]
+	} else if len(url) > 7 && url[:7] == "http://" {
+		scheme = "http"
+		host = url[7:]
 	}
 
 	return storage.NewWeaviateStore(host, scheme)
