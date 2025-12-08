@@ -14,7 +14,6 @@ type Config struct {
 	AI         AIConfig         `yaml:"ai"`
 	Embeddings EmbeddingsConfig `yaml:"embeddings"`
 	Retrieval  RetrievalConfig  `yaml:"retrieval"`
-	Web        WebConfig        `yaml:"web"`
 	Logging    LoggingConfig    `yaml:"logging"`
 }
 
@@ -43,13 +42,6 @@ type RetrievalConfig struct {
 	MaxMemories       int     `yaml:"max_memories"`
 	MinImportance     float64 `yaml:"min_importance"`
 	IncludeGraphDepth int     `yaml:"include_graph_depth"`
-}
-
-// WebConfig holds web UI configuration
-type WebConfig struct {
-	Enabled bool   `yaml:"enabled"`
-	Port    int    `yaml:"port"`
-	Host    string `yaml:"host"`
 }
 
 // LoggingConfig holds logging configuration
@@ -81,11 +73,6 @@ func DefaultConfig() *Config {
 			MaxMemories:       5,
 			MinImportance:     0.3,
 			IncludeGraphDepth: 1,
-		},
-		Web: WebConfig{
-			Enabled: true,
-			Port:    8766,
-			Host:    "localhost",
 		},
 		Logging: LoggingConfig{
 			Level: "info",

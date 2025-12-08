@@ -22,11 +22,6 @@ retrieval:
   min_importance: 0.3  # Minimum importance threshold (0-1)
   include_graph_depth: 1  # Depth to traverse memory relationships
 
-web:
-  enabled: true
-  port: 8766
-  host: localhost
-
 logging:
   level: info  # "debug", "info", "warn", "error"
   file: ~/.alaala/alaala.log

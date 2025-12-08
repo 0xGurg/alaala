@@ -54,18 +54,32 @@ brew install colima docker
 # Start Colima
 colima start
 
-# Run Weaviate setup
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
+# Start Weaviate
+docker run -d \
+  --name weaviate \
+  -p 8080:8080 \
+  -e QUERY_DEFAULTS_LIMIT=25 \
+  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+  -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+  -e DEFAULT_VECTORIZER_MODULE=none \
+  weaviate/weaviate:latest
 ```
 
 ### Using Docker Desktop
 
 ```bash
-# Run Weaviate setup (Docker Desktop auto-starts)
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
+# Start Weaviate (Docker Desktop auto-starts)
+docker run -d \
+  --name weaviate \
+  -p 8080:8080 \
+  -e QUERY_DEFAULTS_LIMIT=25 \
+  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+  -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+  -e DEFAULT_VECTORIZER_MODULE=none \
+  weaviate/weaviate:latest
 ```
 
-This will start a Weaviate container on `http://localhost:8080`.
+Weaviate will be available at `http://localhost:8080`.
 
 ## Step 3: Configure
 

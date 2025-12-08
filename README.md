@@ -16,7 +16,6 @@ A high-performance Go implementation of a semantic memory system that enables AI
 - **Multi-Project Workspaces** - Automatic project isolation with separate memory spaces
 - **Semantic Search** - Vector similarity search with importance weighting and trigger phrase matching
 - **Export/Import** - Backup and share memories in JSON format
-- **Web UI** (Coming Soon) - Beautiful neobrutalist interface with Kanagawa color palette
 
 ## Prerequisites
 
@@ -293,17 +292,16 @@ Each memory contains:
 }
 ```
 
-## Upcoming Features
+## Roadmap
 
 - [x] Core memory engine with MCP
 - [x] SQLite + Weaviate integration
 - [x] AI-powered curation (Claude + OpenRouter)
-- [x] **OpenRouter support** for multiple AI models (GPT-4, Claude, Llama, Gemini)
-- [x] **Homebrew distribution** for easy installation
-- [x] **Ollama support** for local AI (documented, needs implementation)
-- [ ] **Web UI** with neobrutalism design
+- [x] Multi-AI provider support (Anthropic, OpenRouter, Ollama)
+- [x] Homebrew distribution
 - [ ] **Real embeddings** (currently using dummy embeddings)
-- [ ] **Memory graph visualization**
+- [ ] **Ollama implementation** (documented, needs code)
+- [ ] **Memory graph traversal** (storage ready, needs implementation)
 - [ ] **Export/import functionality**
 - [ ] **Cross-project search**
 

@@ -17,7 +17,12 @@ Thank you for your interest in contributing to alaala! We welcome contributions 
 
 3. **Setup Weaviate:**
    ```bash
-   ./scripts/setup-weaviate.sh
+   docker run -d \
+     --name weaviate \
+     -p 8080:8080 \
+     -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+     -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+     weaviate/weaviate:latest
    ```
 
 4. **Build:**
