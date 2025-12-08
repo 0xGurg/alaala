@@ -21,7 +21,7 @@ A high-performance Go implementation of a semantic memory system that enables AI
 ## Prerequisites
 
 - **Docker** - Required for Weaviate vector database
-  - macOS: [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
+  - macOS: [Colima](https://github.com/abiosoft/colima) (recommended, lightweight) or [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
   - Linux: [Docker Engine](https://docs.docker.com/engine/install/)
   - Windows: [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)
 

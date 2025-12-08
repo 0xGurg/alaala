@@ -5,7 +5,8 @@ Get alaala running in under 5 minutes!
 ## Prerequisites
 
 - **Docker** (Required) - For Weaviate vector database
-  - Install: [Docker Desktop](https://docs.docker.com/get-docker/)
+  - macOS: `brew install colima docker` (recommended, lightweight)
+  - Or: [Docker Desktop](https://docs.docker.com/get-docker/)
 - **AI Provider** (Choose one):
   - OpenRouter API key (recommended - free tier available): https://openrouter.ai
   - Anthropic API key (Claude - best quality): https://console.anthropic.com
@@ -44,8 +45,24 @@ alaala version
 
 ## Step 2: Setup Weaviate
 
+### Using Colima (macOS - Recommended)
+
 ```bash
-./scripts/setup-weaviate.sh
+# Install Colima (if not already installed)
+brew install colima docker
+
+# Start Colima
+colima start
+
+# Run Weaviate setup
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
+```
+
+### Using Docker Desktop
+
+```bash
+# Run Weaviate setup (Docker Desktop auto-starts)
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
 ```
 
 This will start a Weaviate container on `http://localhost:8080`.
