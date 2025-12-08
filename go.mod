@@ -1,6 +1,6 @@
 module github.com/0xGurg/alaala
 
-go 1.25.5
+go 1.22.0
 
 require (
 	github.com/google/uuid v1.6.0
