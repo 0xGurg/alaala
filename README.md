@@ -8,14 +8,12 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 - **MCP Protocol Integration** - Works seamlessly with Cursor, Claude Desktop, and other MCP-compatible clients
 - **Hybrid Memory Injection** - Auto-inject context at session start + dynamic updates on each prompt + on-demand searches
-- **AI-Powered Curation** - Claude, OpenRouter, or Ollama analyzes conversation transcripts to extract meaningful insights
-- **Multiple AI Providers** - Choose from Anthropic (cloud), OpenRouter (multi-model), or Ollama (local/private)
+- **AI-Powered Curation** - Claude or OpenRouter analyzes conversation transcripts to extract meaningful insights
+- **Multiple AI Providers** - Choose from Anthropic (cloud) or OpenRouter (multi-model access)
 - **Flexible Model Selection** - Access GPT-4, Claude, Llama, Gemini, and more through OpenRouter
-- **Local AI Support** - Use Ollama for completely private, local memory curation and embeddings
-- **Memory Graph** - Memories can reference and relate to each other (references, supersedes, related_to)
 - **Multi-Project Workspaces** - Automatic project isolation with separate memory spaces
-- **Semantic Search** - Vector similarity search with importance weighting and trigger phrase matching
-- **Export/Import** - Backup and share memories in JSON format
+- **Rich Metadata** - Importance weighting, semantic tags, context types, trigger phrases
+- **Session Management** - Temporal context and session continuity
 
 ## Prerequisites
 
@@ -292,18 +290,20 @@ Each memory contains:
 }
 ```
 
-## Roadmap
+## Current Limitations
 
-- [x] Core memory engine with MCP
-- [x] SQLite + Weaviate integration
-- [x] AI-powered curation (Claude + OpenRouter)
-- [x] Multi-AI provider support (Anthropic, OpenRouter, Ollama)
-- [x] Homebrew distribution
-- [ ] **Real embeddings** (currently using dummy embeddings)
-- [ ] **Ollama implementation** (documented, needs code)
-- [ ] **Memory graph traversal** (storage ready, needs implementation)
-- [ ] **Export/import functionality**
-- [ ] **Cross-project search**
+**What works:**
+- ✅ MCP protocol integration (Cursor, Claude Desktop)
+- ✅ AI-powered memory curation (Claude, OpenRouter)
+- ✅ SQLite storage with full metadata
+- ✅ Session management and project isolation
+- ✅ Homebrew distribution
+
+**Known limitations:**
+- ⚠️ Vector search uses placeholder embeddings (semantic search limited)
+- ⚠️ Ollama support documented but not implemented
+
+See [docs/STATUS.md](docs/STATUS.md) for detailed status.
 
 ## Uninstallation
 
