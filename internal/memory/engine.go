@@ -10,9 +10,11 @@ import (
 
 // Engine is the core memory management system
 type Engine struct {
-	sqlStore    *storage.SQLiteStore
-	vectorStore VectorStore
-	embedder    Embedder
+	sqlStore       *storage.SQLiteStore
+	vectorStore    VectorStore
+	embedder       Embedder
+	graphTraverser *storage.GraphTraverser
+	graphDepth     int
 }
 
 // VectorStore is an interface for vector database operations
@@ -30,10 +32,17 @@ type Embedder interface {
 // NewEngine creates a new memory engine
 func NewEngine(sqlStore *storage.SQLiteStore, vectorStore VectorStore, embedder Embedder) *Engine {
 	return &Engine{
-		sqlStore:    sqlStore,
-		vectorStore: vectorStore,
-		embedder:    embedder,
+		sqlStore:       sqlStore,
+		vectorStore:    vectorStore,
+		embedder:       embedder,
+		graphTraverser: storage.NewGraphTraverser(sqlStore),
+		graphDepth:     1, // Default depth
 	}
+}
+
+// SetGraphDepth sets the graph traversal depth
+func (e *Engine) SetGraphDepth(depth int) {
+	e.graphDepth = depth
 }
 
 // CreateMemory creates a new memory
@@ -161,9 +170,36 @@ func (e *Engine) SearchMemories(query *SearchQuery) ([]*SearchResult, error) {
 	// Sort by relevance score
 	sortByRelevance(results)
 
-	// Limit results
+	// Limit results before graph expansion
 	if len(results) > limit {
 		results = results[:limit]
+	}
+
+	// Expand with graph relationships if configured
+	if e.graphDepth > 0 && len(results) > 0 {
+		seedIDs := make([]string, len(results))
+		for i, r := range results {
+			seedIDs[i] = r.Memory.ID
+		}
+
+		relatedIDs, err := e.graphTraverser.ExpandMemories(seedIDs, e.graphDepth)
+		if err == nil && len(relatedIDs) > 0 {
+			// Fetch related memories
+			for _, relID := range relatedIDs {
+				relMem, err := e.GetMemory(relID)
+				if err != nil || relMem == nil {
+					continue
+				}
+
+				// Add with lower relevance score
+				results = append(results, &SearchResult{
+					Memory:          relMem,
+					SimilarityScore: 0.5,
+					RelevanceScore:  0.5,
+					TriggerMatched:  false,
+				})
+			}
+		}
 	}
 
 	return results, nil

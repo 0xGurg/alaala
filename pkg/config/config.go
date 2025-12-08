@@ -25,22 +25,25 @@ type StorageConfig struct {
 
 // AIConfig holds AI provider configuration
 type AIConfig struct {
-	Provider      string `yaml:"provider"` // "anthropic" or "openrouter"
+	Provider      string `yaml:"provider"` // "anthropic", "openrouter", or "ollama"
 	APIKey        string `yaml:"api_key"`
 	Model         string `yaml:"model"`
 	OpenRouterURL string `yaml:"openrouter_url"` // Default: https://openrouter.ai/api/v1
+	OllamaURL     string `yaml:"ollama_url"`     // Default: http://localhost:11434
 }
 
 // EmbeddingsConfig holds embeddings configuration
 type EmbeddingsConfig struct {
-	Provider string `yaml:"provider"` // "local" (placeholder embeddings)
-	Model    string `yaml:"model"`
+	Provider  string `yaml:"provider"` // "local", "ollama", or "openai"
+	Model     string `yaml:"model"`
+	OllamaURL string `yaml:"ollama_url"` // Default: http://localhost:11434
 }
 
 // RetrievalConfig holds memory retrieval configuration
 type RetrievalConfig struct {
-	MaxMemories   int     `yaml:"max_memories"`
-	MinImportance float64 `yaml:"min_importance"`
+	MaxMemories       int     `yaml:"max_memories"`
+	MinImportance     float64 `yaml:"min_importance"`
+	IncludeGraphDepth int     `yaml:"include_graph_depth"` // Depth to traverse relationships
 }
 
 // LoggingConfig holds logging configuration
@@ -63,14 +66,17 @@ func DefaultConfig() *Config {
 			Provider:      "anthropic",
 			Model:         "claude-3-5-sonnet-20241022",
 			OpenRouterURL: "https://openrouter.ai/api/v1",
+			OllamaURL:     "http://localhost:11434",
 		},
 		Embeddings: EmbeddingsConfig{
-			Provider: "local",
-			Model:    "all-MiniLM-L6-v2",
+			Provider:  "local",
+			Model:     "all-MiniLM-L6-v2",
+			OllamaURL: "http://localhost:11434",
 		},
 		Retrieval: RetrievalConfig{
-			MaxMemories:   5,
-			MinImportance: 0.3,
+			MaxMemories:       5,
+			MinImportance:     0.3,
+			IncludeGraphDepth: 1,
 		},
 		Logging: LoggingConfig{
 			Level: "info",

@@ -6,22 +6,39 @@ storage:
   sqlite_path: ~/.alaala/alaala.db
 
 ai:
-  provider: anthropic  # "anthropic" or "openrouter"
-  api_key: ${ANTHROPIC_API_KEY}  # Use environment variable or set directly
+  provider: anthropic  # "anthropic", "openrouter", or "ollama"
+  api_key: ${ANTHROPIC_API_KEY}  # or ${OPENROUTER_API_KEY} (not needed for ollama)
   model: claude-3-5-sonnet-20241022  # Model name (provider-specific)
-  openrouter_url: https://openrouter.ai/api/v1  # Only needed if using openrouter (optional)
+  openrouter_url: https://openrouter.ai/api/v1  # Optional
+  ollama_url: http://localhost:11434  # Optional (default)
 
 embeddings:
-  provider: local  # Only "local" is currently supported (placeholder embeddings)
-  model: all-MiniLM-L6-v2
+  provider: local  # "local" (placeholder) or "ollama" (real embeddings)
+  model: all-MiniLM-L6-v2  # or "nomic-embed-text" for ollama
+  ollama_url: http://localhost:11434  # Optional (default)
 
 retrieval:
-  max_memories: 5  # Maximum memories to return in search
+  max_memories: 5  # Maximum memories to return
   min_importance: 0.3  # Minimum importance threshold (0-1)
+  include_graph_depth: 1  # Follow memory relationships (0 = disabled)
 
 logging:
   level: info  # "debug", "info", "warn", "error"
   file: ~/.alaala/alaala.log
+
+# Example: Local AI with Ollama (fully private, no API costs)
+# ai:
+#   provider: ollama
+#   model: llama3.1
+#   ollama_url: http://localhost:11434
+# embeddings:
+#   provider: ollama
+#   model: nomic-embed-text
+#   ollama_url: http://localhost:11434
+#
+# Setup: brew install ollama
+#        ollama pull llama3.1
+#        ollama pull nomic-embed-text
 
 # Example OpenRouter Configuration (Multiple Models):
 # ai:

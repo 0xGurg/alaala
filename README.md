@@ -8,12 +8,13 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 - **MCP Protocol Integration** - Works seamlessly with Cursor, Claude Desktop, and other MCP-compatible clients
 - **Hybrid Memory Injection** - Auto-inject context at session start + dynamic updates on each prompt + on-demand searches
-- **AI-Powered Curation** - Claude or OpenRouter analyzes conversation transcripts to extract meaningful insights
-- **Multiple AI Providers** - Anthropic (Claude) or OpenRouter (GPT-4, Llama, Gemini, etc.)
-- **Flexible Model Selection** - Switch between models without code changes
-- **Multi-Project Workspaces** - Automatic project isolation with separate memory spaces
-- **Rich Metadata** - Importance weighting, semantic tags, context types, trigger phrases
-- **Session Management** - Temporal context and session continuity
+- **AI-Powered Curation** - Claude, OpenRouter, or Ollama analyzes conversation transcripts
+- **Multiple AI Providers** - Anthropic (cloud), OpenRouter (multi-model), or Ollama (local/private)
+- **Real Embeddings** - Ollama provides semantic vector embeddings locally
+- **Vector Search** - Weaviate similarity search with real embeddings
+- **Memory Graph** - Follow relationships between memories for richer context
+- **Multi-Project Workspaces** - Automatic project isolation
+- **Session Management** - Temporal context and continuity
 
 ## Prerequisites
 
@@ -21,6 +22,10 @@ A high-performance Go implementation of a semantic memory system that enables AI
   - macOS: [Colima](https://github.com/abiosoft/colima) (recommended, lightweight) or [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
   - Linux: [Docker Engine](https://docs.docker.com/engine/install/)
   - Windows: [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)
+
+- **Ollama** - Optional, for local AI (embeddings + curation)
+  - macOS: `brew install ollama`
+  - Linux/Windows: https://ollama.ai/download
 
 ## Quick Start
 
@@ -290,8 +295,10 @@ Each memory contains:
 - ✅ Session management and project isolation
 - ✅ Homebrew distribution
 
-**Known limitations:**
-- ⚠️ Vector search uses placeholder embeddings (good enough for context injection)
+**With Ollama (optional):**
+- ✅ Real semantic embeddings (nomic-embed-text)
+- ✅ Fully local and private AI
+- ✅ No API costs
 
 See [docs/STATUS.md](docs/STATUS.md) for detailed status.
 

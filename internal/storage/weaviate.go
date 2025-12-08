@@ -188,17 +188,96 @@ func (w *WeaviateStore) Store(id string, content string, embedding []float32, me
 
 // Search performs vector similarity search
 func (w *WeaviateStore) Search(embedding []float32, limit int, filterMap map[string]interface{}) ([]VectorSearchResult, error) {
-	// For now, return empty results - this needs proper Weaviate GraphQL implementation
-	// The Weaviate Go client API requires careful handling of GraphQL fields
-	// TODO: Implement proper vector search with Weaviate client v4 API
-	var results []VectorSearchResult
+	// Build near vector argument
+	nearVector := w.client.GraphQL().NearVectorArgBuilder().
+		WithVector(embedding)
 
-	// Placeholder to avoid unused variables
-	_ = embedding
-	_ = limit
-	_ = filterMap
+	// Build the query
+	query := w.client.GraphQL().Get().
+		WithClassName(MemoryClassName).
+		WithNearVector(nearVector).
+		WithLimit(limit)
 
-	return results, nil
+	// Add filters if provided
+	if projectID, ok := filterMap["project_id"].(string); ok && projectID != "" {
+		// Simple project filter - just query and parse results manually
+		// More complex filters can be added later
+		_ = projectID // Will use in manual filtering below
+	}
+
+	// Execute the query - we need to get the raw response
+	result, err := query.Do(w.ctx)
+	if err != nil {
+		return nil, fmt.Errorf("weaviate query failed: %w", err)
+	}
+
+	// Parse results
+	var searchResults []VectorSearchResult
+
+	// Extract data from GraphQL response
+	if result.Data == nil {
+		return searchResults, nil
+	}
+
+	getData, ok := result.Data["Get"].(map[string]interface{})
+	if !ok {
+		return searchResults, nil
+	}
+
+	memories, ok := getData[MemoryClassName].([]interface{})
+	if !ok {
+		return searchResults, nil
+	}
+
+	// Parse each memory result
+	for _, item := range memories {
+		memData, ok := item.(map[string]interface{})
+		if !ok {
+			continue
+		}
+
+		// Try to get ID and certainty/distance from _additional
+		id := ""
+		distance := 0.0
+
+		if additional, ok := memData["_additional"].(map[string]interface{}); ok {
+			if idVal, ok := additional["id"].(string); ok {
+				id = idVal
+			}
+			// Weaviate might return "certainty" or "distance"
+			if distVal, ok := additional["distance"].(float64); ok {
+				distance = distVal
+			} else if certVal, ok := additional["certainty"].(float64); ok {
+				distance = 1.0 - certVal // Convert certainty to distance
+			}
+		}
+
+		if id == "" {
+			continue
+		}
+
+		// Apply project filter if specified (manual filtering)
+		if projectID, ok := filterMap["project_id"].(string); ok && projectID != "" {
+			if projID, ok := memData["projectId"].(string); ok && projID != projectID {
+				continue // Skip if project doesn't match
+			}
+		}
+
+		// Apply importance filter if specified
+		if minImp, ok := filterMap["importance_gte"].(float64); ok {
+			if imp, ok := memData["importance"].(float64); ok && imp < minImp {
+				continue // Skip if importance too low
+			}
+		}
+
+		searchResults = append(searchResults, VectorSearchResult{
+			ID:       id,
+			Distance: distance,
+			Metadata: memData,
+		})
+	}
+
+	return searchResults, nil
 }
 
 // Delete deletes a memory by ID

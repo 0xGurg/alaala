@@ -109,6 +109,7 @@ func serveMCP() {
 
 	// Initialize memory engine
 	engine := memory.NewEngine(sqlStore, weaviateStore, embedder)
+	engine.SetGraphDepth(cfg.Retrieval.IncludeGraphDepth)
 
 	// Initialize AI client
 	aiClient, err := initAIClient(cfg)
@@ -206,6 +207,9 @@ func initWeaviateStore(cfg *config.Config) (*storage.WeaviateStore, error) {
 }
 
 func initEmbeddings(cfg *config.Config) (*embeddings.Client, error) {
+	if cfg.Embeddings.Provider == "ollama" {
+		return embeddings.NewClientWithURL(cfg.Embeddings.Provider, cfg.Embeddings.Model, cfg.Embeddings.OllamaURL)
+	}
 	return embeddings.NewClient(cfg.Embeddings.Provider, cfg.Embeddings.Model)
 }
 
@@ -229,6 +233,8 @@ func initAIClient(cfg *config.Config) (memory.AIClient, error) {
 			return nil, fmt.Errorf("OPENROUTER_API_KEY not set")
 		}
 		return ai.NewOpenRouterClient(apiKey, cfg.AI.Model, cfg.AI.OpenRouterURL), nil
+	case "ollama":
+		return ai.NewOllamaClient(cfg.AI.OllamaURL, cfg.AI.Model), nil
 	default:
 		return nil, fmt.Errorf("unsupported AI provider: %s", cfg.AI.Provider)
 	}
