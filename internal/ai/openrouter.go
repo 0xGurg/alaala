@@ -131,9 +131,9 @@ func (c *OpenRouterClient) parseCurationResponse(response string) (*CurationResp
 
 // openRouterRequest represents a request to OpenRouter API (OpenAI-compatible format)
 type openRouterRequest struct {
-	Model    string                   `json:"model"`
-	Messages []openRouterMessage      `json:"messages"`
-	MaxTokens int                     `json:"max_tokens,omitempty"`
+	Model     string              `json:"model"`
+	Messages  []openRouterMessage `json:"messages"`
+	MaxTokens int                 `json:"max_tokens,omitempty"`
 }
 
 // openRouterMessage represents a message in the conversation
@@ -168,27 +168,27 @@ type openRouterResponse struct {
 func (c *OpenRouterClient) callOpenRouter(prompt string) (string, error) {
 	var lastErr error
 	maxRetries := 3
-	
+
 	for attempt := 0; attempt < maxRetries; attempt++ {
 		if attempt > 0 {
 			// Exponential backoff: 1s, 2s, 4s
 			backoff := time.Duration(1<<uint(attempt-1)) * time.Second
 			time.Sleep(backoff)
 		}
-		
+
 		response, err := c.makeRequest(prompt)
 		if err == nil {
 			return response, nil
 		}
-		
+
 		lastErr = err
-		
+
 		// Don't retry on certain errors
 		if !c.shouldRetry(err) {
 			return "", err
 		}
 	}
-	
+
 	return "", fmt.Errorf("failed after %d attempts: %w", maxRetries, lastErr)
 }
 
@@ -219,7 +219,7 @@ func (c *OpenRouterClient) makeRequest(prompt string) (string, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.apiKey))
 	req.Header.Set("HTTP-Referer", "https://github.com/0xGurg/alaala") // Optional but recommended
-	req.Header.Set("X-Title", "alaala") // Optional but recommended
+	req.Header.Set("X-Title", "alaala")                                // Optional but recommended
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -257,22 +257,22 @@ func (c *OpenRouterClient) makeRequest(prompt string) (string, error) {
 // shouldRetry determines if an error is retryable
 func (c *OpenRouterClient) shouldRetry(err error) bool {
 	errStr := err.Error()
-	
+
 	// Retry on rate limits
 	if contains(errStr, "rate limit") || contains(errStr, "429") {
 		return true
 	}
-	
+
 	// Retry on temporary errors
 	if contains(errStr, "timeout") || contains(errStr, "connection") {
 		return true
 	}
-	
+
 	// Retry on server errors (5xx)
 	if contains(errStr, "500") || contains(errStr, "502") || contains(errStr, "503") {
 		return true
 	}
-	
+
 	// Don't retry on client errors (4xx except 429)
 	return false
 }
@@ -284,22 +284,22 @@ func (c *OpenRouterClient) formatAPIError(apiErr *struct {
 	Code    string `json:"code"`
 }, statusCode int) error {
 	baseMsg := fmt.Sprintf("OpenRouter API error: %s", apiErr.Message)
-	
+
 	// Add helpful suggestions based on error type
 	switch {
 	case contains(apiErr.Code, "invalid_api_key") || contains(apiErr.Code, "authentication"):
 		return fmt.Errorf("%s\n\nPlease check your OPENROUTER_API_KEY environment variable", baseMsg)
-	
+
 	case contains(apiErr.Code, "rate_limit") || statusCode == 429:
 		return fmt.Errorf("%s\n\nYou've hit the rate limit. The request will be retried automatically", baseMsg)
-	
+
 	case contains(apiErr.Message, "model") && contains(apiErr.Message, "not found"):
-		return fmt.Errorf("%s\n\nModel '%s' is not available. Try: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo, or meta-llama/llama-3.1-70b-instruct", 
+		return fmt.Errorf("%s\n\nModel '%s' is not available. Try: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo, or meta-llama/llama-3.1-70b-instruct",
 			baseMsg, c.model)
-	
+
 	case contains(apiErr.Code, "insufficient_quota") || contains(apiErr.Message, "credits"):
 		return fmt.Errorf("%s\n\nInsufficient credits. Please add credits to your OpenRouter account", baseMsg)
-	
+
 	default:
 		return fmt.Errorf("%s (type: %s, code: %s)", baseMsg, apiErr.Type, apiErr.Code)
 	}
@@ -309,8 +309,8 @@ func (c *OpenRouterClient) formatAPIError(apiErr *struct {
 func contains(s, substr string) bool {
 	s = toLowerSimple(s)
 	substr = toLowerSimple(substr)
-	return len(s) >= len(substr) && 
-		   (s == substr || findSubstring(s, substr) != -1)
+	return len(s) >= len(substr) &&
+		(s == substr || findSubstring(s, substr) != -1)
 }
 
 func toLowerSimple(s string) string {
@@ -336,4 +336,3 @@ func findSubstring(haystack, needle string) int {
 	}
 	return -1
 }
-

@@ -138,18 +138,18 @@ type Session struct {
 
 // Memory represents memory metadata in the database
 type Memory struct {
-	ID                 string
-	ProjectID          string
-	SessionID          *string
-	Content            string
-	Importance         float64
-	ContextType        *string
-	TemporalRelevance  *string
-	ActionRequired     bool
-	Tags               []string
-	TriggerPhrases     []string
-	CreatedAt          time.Time
-	UpdatedAt          time.Time
+	ID                string
+	ProjectID         string
+	SessionID         *string
+	Content           string
+	Importance        float64
+	ContextType       *string
+	TemporalRelevance *string
+	ActionRequired    bool
+	Tags              []string
+	TriggerPhrases    []string
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
 }
 
 // MemoryRelationship represents a relationship between memories
@@ -399,4 +399,3 @@ func (s *SQLiteStore) GetRelationships(memoryID string) ([]MemoryRelationship, e
 
 	return relationships, nil
 }
-

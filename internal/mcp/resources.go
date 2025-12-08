@@ -164,4 +164,3 @@ func formatSessionPrimer(primer *memory.SessionPrimer) string {
 
 	return text
 }
-

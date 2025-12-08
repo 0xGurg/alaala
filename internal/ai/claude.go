@@ -103,17 +103,17 @@ Remember: Only extract memories that are genuinely worth preserving. Quality ove
 // parseCurationResponse parses the AI's JSON response
 func (c *ClaudeClient) parseCurationResponse(response string) (*CurationResponse, error) {
 	var curation CurationResponse
-	
+
 	// Extract JSON from response (Claude might include explanatory text)
 	jsonStart := findJSONStart(response)
 	jsonEnd := findJSONEnd(response)
-	
+
 	if jsonStart == -1 || jsonEnd == -1 {
 		return nil, fmt.Errorf("no valid JSON found in response")
 	}
-	
+
 	jsonStr := response[jsonStart : jsonEnd+1]
-	
+
 	if err := json.Unmarshal([]byte(jsonStr), &curation); err != nil {
 		return nil, fmt.Errorf("failed to parse JSON: %w", err)
 	}
@@ -211,7 +211,7 @@ func findJSONStart(s string) int {
 func findJSONEnd(s string) int {
 	depth := 0
 	start := -1
-	
+
 	for i := 0; i < len(s); i++ {
 		if s[i] == '{' {
 			if start == -1 {
@@ -225,7 +225,6 @@ func findJSONEnd(s string) int {
 			}
 		}
 	}
-	
+
 	return -1
 }
-

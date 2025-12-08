@@ -9,8 +9,8 @@ import (
 
 // Curator handles AI-powered memory curation
 type Curator struct {
-	engine    *Engine
-	aiClient  AIClient
+	engine   *Engine
+	aiClient AIClient
 }
 
 // AIClient is an interface for AI-powered curation
@@ -105,4 +105,3 @@ func (c *Curator) CurateSession(projectID, sessionID, transcript string) (*Curat
 		Summary:       aiResp.Summary,
 	}, nil
 }
-

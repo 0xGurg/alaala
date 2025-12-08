@@ -9,9 +9,9 @@ type CurationRequest struct {
 
 // CurationResponse represents the AI's curated memories
 type CurationResponse struct {
-	Memories      []CuratedMemory       `json:"memories"`
-	Relationships []MemoryRelationship  `json:"relationships"`
-	Summary       string                `json:"summary"`
+	Memories      []CuratedMemory      `json:"memories"`
+	Relationships []MemoryRelationship `json:"relationships"`
+	Summary       string               `json:"summary"`
 }
 
 // CuratedMemory represents a memory extracted by the AI
@@ -33,4 +33,3 @@ type MemoryRelationship struct {
 	ToIndex   int    `json:"to_index"`
 	Type      string `json:"type"`
 }
-

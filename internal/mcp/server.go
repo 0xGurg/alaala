@@ -41,15 +41,15 @@ func (s *Server) registerHandlers() {
 	// Tool handlers
 	s.handlers["tools/list"] = s.handleListTools
 	s.handlers["tools/call"] = s.handleCallTool
-	
+
 	// Resource handlers
 	s.handlers["resources/list"] = s.handleListResources
 	s.handlers["resources/read"] = s.handleReadResource
-	
+
 	// Prompt handlers
 	s.handlers["prompts/list"] = s.handleListPrompts
 	s.handlers["prompts/get"] = s.handleGetPrompt
-	
+
 	// Server info
 	s.handlers["initialize"] = s.handleInitialize
 }
@@ -176,4 +176,3 @@ type JSONRPCError struct {
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
 }
-

@@ -87,7 +87,7 @@ func formatSessionPrimerAsPrompt(primer *memory.SessionPrimer) string {
 
 	if primer.LastSessionDate != nil {
 		text += fmt.Sprintf("Time since last session: %s\n\n", primer.TimeSinceLastSession)
-		
+
 		if primer.LastSessionSummary != "" {
 			text += fmt.Sprintf("Last session summary: %s\n\n", primer.LastSessionSummary)
 		}
@@ -98,18 +98,18 @@ func formatSessionPrimerAsPrompt(primer *memory.SessionPrimer) string {
 	if len(primer.TopMemories) > 0 {
 		text += "## Relevant Context\n\n"
 		text += "Here are the most relevant memories for this session:\n\n"
-		
+
 		for i, mem := range primer.TopMemories {
 			text += fmt.Sprintf("%d. **%s**\n", i+1, mem.Content)
-			
+
 			if len(mem.SemanticTags) > 0 {
 				text += fmt.Sprintf("   - Tags: %v\n", mem.SemanticTags)
 			}
-			
+
 			if mem.ContextType != "" {
 				text += fmt.Sprintf("   - Type: %s\n", mem.ContextType)
 			}
-			
+
 			text += "\n"
 		}
 	}
@@ -117,7 +117,7 @@ func formatSessionPrimerAsPrompt(primer *memory.SessionPrimer) string {
 	if len(primer.UnresolvedItems) > 0 {
 		text += "## Unresolved Items\n\n"
 		text += "These items need attention:\n\n"
-		
+
 		for i, mem := range primer.UnresolvedItems {
 			text += fmt.Sprintf("%d. %s\n\n", i+1, mem.Content)
 		}
@@ -128,4 +128,3 @@ func formatSessionPrimerAsPrompt(primer *memory.SessionPrimer) string {
 
 	return text
 }
-

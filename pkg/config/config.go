@@ -20,9 +20,9 @@ type Config struct {
 
 // StorageConfig holds storage-related configuration
 type StorageConfig struct {
-	Mode       string          `yaml:"mode"` // "embedded" or "docker"
-	Weaviate   WeaviateConfig  `yaml:"weaviate"`
-	SQLitePath string          `yaml:"sqlite_path"`
+	Mode       string         `yaml:"mode"` // "embedded" or "docker"
+	Weaviate   WeaviateConfig `yaml:"weaviate"`
+	SQLitePath string         `yaml:"sqlite_path"`
 }
 
 // WeaviateConfig holds Weaviate-specific configuration
@@ -157,4 +157,3 @@ func GetConfigPath() string {
 	homeDir, _ := os.UserHomeDir()
 	return filepath.Join(homeDir, ".alaala", "config.yaml")
 }
-

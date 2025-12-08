@@ -37,16 +37,16 @@ func (c *Client) embedLocal(text string) ([]float32, error) {
 	// TODO: Implement actual local embeddings using sentence-transformers
 	// For now, return a dummy embedding vector
 	// This should be replaced with actual model inference
-	
+
 	// Dummy 384-dimensional vector (typical for all-MiniLM-L6-v2)
 	embedding := make([]float32, 384)
-	
+
 	// Simple hash-based fake embedding for development
 	hash := simpleHash(text)
 	for i := 0; i < 384; i++ {
 		embedding[i] = float32((hash+i)%100) / 100.0
 	}
-	
+
 	return embedding, nil
 }
 
@@ -61,4 +61,3 @@ func simpleHash(s string) int {
 	}
 	return h
 }
-

@@ -74,7 +74,7 @@ type SearchQuery struct {
 
 // SearchResult represents a memory search result with scoring
 type SearchResult struct {
-	Memory         *Memory
+	Memory          *Memory
 	SimilarityScore float64
 	RelevanceScore  float64
 	TriggerMatched  bool
@@ -82,12 +82,12 @@ type SearchResult struct {
 
 // SessionPrimer represents contextual information injected at session start
 type SessionPrimer struct {
-	ProjectName       string
-	LastSessionDate   *time.Time
+	ProjectName          string
+	LastSessionDate      *time.Time
 	TimeSinceLastSession string
-	LastSessionSummary string
-	TopMemories       []*Memory
-	UnresolvedItems   []*Memory
+	LastSessionSummary   string
+	TopMemories          []*Memory
+	UnresolvedItems      []*Memory
 }
 
 // CurationRequest represents a request to curate memories from a transcript
@@ -107,4 +107,3 @@ type CurationResponse struct {
 	}
 	Summary string
 }
-

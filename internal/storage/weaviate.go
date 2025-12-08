@@ -193,12 +193,12 @@ func (w *WeaviateStore) Search(embedding []float32, limit int, filterMap map[str
 	// The Weaviate Go client API requires careful handling of GraphQL fields
 	// TODO: Implement proper vector search with Weaviate client v4 API
 	var results []VectorSearchResult
-	
+
 	// Placeholder to avoid unused variables
 	_ = embedding
 	_ = limit
 	_ = filterMap
-	
+
 	return results, nil
 }
 
@@ -258,4 +258,3 @@ func (w *WeaviateStore) Close() error {
 	// Weaviate Go client doesn't have explicit close
 	return nil
 }
-

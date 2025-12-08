@@ -187,15 +187,15 @@ func (s *Server) toolSearchMemories(args json.RawMessage) (interface{}, error) {
 	var memories []map[string]interface{}
 	for _, result := range results {
 		memories = append(memories, map[string]interface{}{
-			"id":                result.Memory.ID,
-			"content":           result.Memory.Content,
-			"importance":        result.Memory.Importance,
-			"tags":              result.Memory.SemanticTags,
-			"context_type":      result.Memory.ContextType,
-			"similarity_score":  result.SimilarityScore,
-			"relevance_score":   result.RelevanceScore,
-			"trigger_matched":   result.TriggerMatched,
-			"created_at":        result.Memory.CreatedAt,
+			"id":               result.Memory.ID,
+			"content":          result.Memory.Content,
+			"importance":       result.Memory.Importance,
+			"tags":             result.Memory.SemanticTags,
+			"context_type":     result.Memory.ContextType,
+			"similarity_score": result.SimilarityScore,
+			"relevance_score":  result.RelevanceScore,
+			"trigger_matched":  result.TriggerMatched,
+			"created_at":       result.Memory.CreatedAt,
 		})
 	}
 
@@ -352,4 +352,3 @@ func formatMemoriesAsText(memories []map[string]interface{}) string {
 
 	return result
 }
-

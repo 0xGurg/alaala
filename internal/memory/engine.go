@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/0xGurg/alaala/internal/storage"
+	"github.com/google/uuid"
 )
 
 // Engine is the core memory management system
@@ -279,15 +279,15 @@ func (e *Engine) GetSessionPrimer(projectID string) (*SessionPrimer, error) {
 
 func (e *Engine) sqlMemoryToMemory(sqlMem *storage.Memory) *Memory {
 	mem := &Memory{
-		ID:                sqlMem.ID,
-		ProjectID:         sqlMem.ProjectID,
-		Content:           sqlMem.Content,
-		Importance:        sqlMem.Importance,
-		SemanticTags:      sqlMem.Tags,
-		TriggerPhrases:    sqlMem.TriggerPhrases,
-		ActionRequired:    sqlMem.ActionRequired,
-		CreatedAt:         sqlMem.CreatedAt,
-		UpdatedAt:         sqlMem.UpdatedAt,
+		ID:             sqlMem.ID,
+		ProjectID:      sqlMem.ProjectID,
+		Content:        sqlMem.Content,
+		Importance:     sqlMem.Importance,
+		SemanticTags:   sqlMem.Tags,
+		TriggerPhrases: sqlMem.TriggerPhrases,
+		ActionRequired: sqlMem.ActionRequired,
+		CreatedAt:      sqlMem.CreatedAt,
+		UpdatedAt:      sqlMem.UpdatedAt,
 	}
 
 	if sqlMem.SessionID != nil {
@@ -316,9 +316,9 @@ func (e *Engine) checkTriggerMatch(query string, triggers []string) bool {
 }
 
 func (e *Engine) calculateRelevanceScore(mem *Memory, similarity float64, triggerMatched bool) float64 {
-	score := similarity * 0.6 // Base semantic similarity (60%)
+	score := similarity * 0.6     // Base semantic similarity (60%)
 	score += mem.Importance * 0.3 // Importance weight (30%)
-	
+
 	if triggerMatched {
 		score += 0.2 // Trigger match boost (20%)
 	}
@@ -423,4 +423,3 @@ func formatDuration(d time.Duration) string {
 	}
 	return fmt.Sprintf("%d months ago", months)
 }
-
