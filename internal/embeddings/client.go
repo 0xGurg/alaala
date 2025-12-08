@@ -23,12 +23,8 @@ func (c *Client) Embed(text string) ([]float32, error) {
 	switch c.provider {
 	case "local":
 		return c.embedLocal(text)
-	case "openai":
-		return nil, fmt.Errorf("OpenAI embeddings not yet implemented")
-	case "ollama":
-		return nil, fmt.Errorf("Ollama embeddings not yet implemented")
 	default:
-		return nil, fmt.Errorf("unknown embeddings provider: %s", c.provider)
+		return nil, fmt.Errorf("unknown embeddings provider: %s (only 'local' is supported)", c.provider)
 	}
 }
 

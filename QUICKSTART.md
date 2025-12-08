@@ -10,7 +10,6 @@ Get alaala running in under 5 minutes!
 - **AI Provider** (Choose one):
   - OpenRouter API key (recommended - free tier available): https://openrouter.ai
   - Anthropic API key (Claude - best quality): https://console.anthropic.com
-  - Ollama (local AI - private): https://ollama.ai
 
 ## Step 1: Install alaala
 
@@ -101,28 +100,8 @@ export OPENROUTER_API_KEY="sk-or-v1-..."
 # Edit ~/.alaala/config.yaml and set:
 # ai:
 #   provider: openrouter
-#   model: anthropic/claude-3.5-sonnet
-#   # Or try other models:
-#   # model: openai/gpt-4-turbo
-#   # model: meta-llama/llama-3.1-70b-instruct
-#   # model: google/gemini-pro-1.5
-```
-
-### Option C: Ollama (Local, Private)
-
-```bash
-# Install Ollama from https://ollama.ai
-# Then pull the models
-ollama pull llama3.1
-ollama pull nomic-embed-text
-
-# Edit ~/.alaala/config.yaml and set:
-# ai:
-#   provider: ollama
-#   model: llama3.1
-# embeddings:
-#   provider: ollama
-#   model: nomic-embed-text
+#   model: meta-llama/llama-3.1-8b-instruct:free  # Free tier
+#   # Or try: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo
 ```
 
 ### Initialize Your Project
@@ -155,7 +134,7 @@ This creates `.alaala-project.json` and `~/.alaala/config.yaml`.
 }
 ```
 
-**Note:** Change to `ANTHROPIC_API_KEY` if using Claude, or remove `env` entirely if using Ollama (local).
+**Note:** Change to `ANTHROPIC_API_KEY` if using Anthropic Claude instead of OpenRouter.
 
 ## Step 5: Restart Cursor
 

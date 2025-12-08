@@ -9,8 +9,8 @@ A high-performance Go implementation of a semantic memory system that enables AI
 - **MCP Protocol Integration** - Works seamlessly with Cursor, Claude Desktop, and other MCP-compatible clients
 - **Hybrid Memory Injection** - Auto-inject context at session start + dynamic updates on each prompt + on-demand searches
 - **AI-Powered Curation** - Claude or OpenRouter analyzes conversation transcripts to extract meaningful insights
-- **Multiple AI Providers** - Choose from Anthropic (cloud) or OpenRouter (multi-model access)
-- **Flexible Model Selection** - Access GPT-4, Claude, Llama, Gemini, and more through OpenRouter
+- **Multiple AI Providers** - Anthropic (Claude) or OpenRouter (GPT-4, Llama, Gemini, etc.)
+- **Flexible Model Selection** - Switch between models without code changes
 - **Multi-Project Workspaces** - Automatic project isolation with separate memory spaces
 - **Rich Metadata** - Importance weighting, semantic tags, context types, trigger phrases
 - **Session Management** - Temporal context and session continuity
@@ -136,23 +136,14 @@ logging:
 
 **Option A: Using Anthropic Claude (Cloud)**
 ```bash
-export ANTHROPIC_API_KEY="your-api-key-here"
+export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
-**Option B: Using OpenRouter (Multiple Models)**
+**Option B: Using OpenRouter (Multiple Models, Free Tier Available)**
 ```bash
 export OPENROUTER_API_KEY="sk-or-v1-..."
 # Get your key from https://openrouter.ai
-# Update config.yaml to use provider: openrouter
-# Choose from: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo, meta-llama/llama-3.1-70b-instruct, etc.
-```
-
-**Option C: Using Ollama (Local)**
-```bash
-# Install Ollama from https://ollama.ai
-ollama pull llama3.1
-ollama pull nomic-embed-text
-# Update config.yaml to use provider: ollama
+# Free models available: meta-llama/llama-3.1-8b-instruct:free
 ```
 
 ### MCP Configuration
@@ -300,8 +291,7 @@ Each memory contains:
 - ✅ Homebrew distribution
 
 **Known limitations:**
-- ⚠️ Vector search uses placeholder embeddings (semantic search limited)
-- ⚠️ Ollama support documented but not implemented
+- ⚠️ Vector search uses placeholder embeddings (good enough for context injection)
 
 See [docs/STATUS.md](docs/STATUS.md) for detailed status.
 

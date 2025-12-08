@@ -229,8 +229,6 @@ func initAIClient(cfg *config.Config) (memory.AIClient, error) {
 			return nil, fmt.Errorf("OPENROUTER_API_KEY not set")
 		}
 		return ai.NewOpenRouterClient(apiKey, cfg.AI.Model, cfg.AI.OpenRouterURL), nil
-	case "ollama":
-		return nil, fmt.Errorf("ollama provider not yet implemented")
 	default:
 		return nil, fmt.Errorf("unsupported AI provider: %s", cfg.AI.Provider)
 	}

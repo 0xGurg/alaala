@@ -166,14 +166,6 @@ func (e *Engine) SearchMemories(query *SearchQuery) ([]*SearchResult, error) {
 		results = results[:limit]
 	}
 
-	// Include graph relationships if requested
-	if query.IncludeGraphDepth > 0 {
-		results, err = e.expandWithGraph(results, query.IncludeGraphDepth)
-		if err != nil {
-			return nil, fmt.Errorf("failed to expand with graph: %w", err)
-		}
-	}
-
 	return results, nil
 }
 
@@ -334,12 +326,6 @@ func (e *Engine) calculateRelevanceScore(mem *Memory, similarity float64, trigge
 	}
 
 	return score
-}
-
-func (e *Engine) expandWithGraph(results []*SearchResult, depth int) ([]*SearchResult, error) {
-	// TODO: Implement graph expansion
-	// For now, return as-is
-	return results, nil
 }
 
 func sortByRelevance(results []*SearchResult) {

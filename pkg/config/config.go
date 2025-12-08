@@ -25,7 +25,7 @@ type StorageConfig struct {
 
 // AIConfig holds AI provider configuration
 type AIConfig struct {
-	Provider      string `yaml:"provider"` // "anthropic", "openai", "ollama", "openrouter"
+	Provider      string `yaml:"provider"` // "anthropic" or "openrouter"
 	APIKey        string `yaml:"api_key"`
 	Model         string `yaml:"model"`
 	OpenRouterURL string `yaml:"openrouter_url"` // Default: https://openrouter.ai/api/v1
@@ -33,15 +33,14 @@ type AIConfig struct {
 
 // EmbeddingsConfig holds embeddings configuration
 type EmbeddingsConfig struct {
-	Provider string `yaml:"provider"` // "local", "openai", "ollama"
+	Provider string `yaml:"provider"` // "local" (placeholder embeddings)
 	Model    string `yaml:"model"`
 }
 
 // RetrievalConfig holds memory retrieval configuration
 type RetrievalConfig struct {
-	MaxMemories       int     `yaml:"max_memories"`
-	MinImportance     float64 `yaml:"min_importance"`
-	IncludeGraphDepth int     `yaml:"include_graph_depth"`
+	MaxMemories   int     `yaml:"max_memories"`
+	MinImportance float64 `yaml:"min_importance"`
 }
 
 // LoggingConfig holds logging configuration
@@ -70,9 +69,8 @@ func DefaultConfig() *Config {
 			Model:    "all-MiniLM-L6-v2",
 		},
 		Retrieval: RetrievalConfig{
-			MaxMemories:       5,
-			MinImportance:     0.3,
-			IncludeGraphDepth: 1,
+			MaxMemories:   5,
+			MinImportance: 0.3,
 		},
 		Logging: LoggingConfig{
 			Level: "info",

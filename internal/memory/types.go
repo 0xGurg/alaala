@@ -64,12 +64,11 @@ type Relationship struct {
 
 // SearchQuery represents a memory search request
 type SearchQuery struct {
-	Query             string
-	ProjectID         string
-	Limit             int
-	MinImportance     float64
-	ContextTypes      []ContextType
-	IncludeGraphDepth int
+	Query         string
+	ProjectID     string
+	Limit         int
+	MinImportance float64
+	ContextTypes  []ContextType
 }
 
 // SearchResult represents a memory search result with scoring

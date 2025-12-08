@@ -118,12 +118,6 @@ GOOS=darwin GOARCH=amd64 go build -o bin/alaala-darwin-amd64 ./cmd/alaala
    - Markdown export
    - Import validation
 
-6. **Ollama Integration** (Documented, needs implementation)
-   - HTTP client for Ollama API
-   - Embeddings via Ollama (nomic-embed-text)
-   - Curation via Ollama (llama3.1, mistral, etc.)
-   - Configuration already documented in examples/config.yaml
-
 ### Low Priority
 
 7. **Testing**
