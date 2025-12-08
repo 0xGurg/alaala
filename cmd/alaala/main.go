@@ -31,8 +31,6 @@ func main() {
 	switch cmd {
 	case "serve":
 		serveMCP()
-	case "web":
-		serveWeb()
 	case "init":
 		initProject()
 	case "version":
@@ -54,7 +52,6 @@ Usage:
 
 Commands:
   serve      Start the MCP server (for Cursor/Claude Desktop integration)
-  web        Start the web UI server
   init       Initialize a new project with .alaala-project.json
   version    Print version information
   help       Show this help message
@@ -62,9 +59,6 @@ Commands:
 Examples:
   # Start MCP server for Cursor
   alaala serve
-
-  # Start web UI on custom port
-  alaala web --port 8080
 
   # Initialize project
   alaala init
@@ -115,6 +109,7 @@ func serveMCP() {
 
 	// Initialize memory engine
 	engine := memory.NewEngine(sqlStore, weaviateStore, embedder)
+	engine.SetGraphDepth(cfg.Retrieval.IncludeGraphDepth)
 
 	// Initialize AI client
 	aiClient, err := initAIClient(cfg)
@@ -135,27 +130,6 @@ func serveMCP() {
 		fmt.Fprintf(os.Stderr, "MCP server error: %v\n", err)
 		os.Exit(1)
 	}
-}
-
-func serveWeb() {
-	fmt.Println("Starting web UI...")
-
-	// Load configuration
-	cfg, err := config.Load(config.GetConfigPath())
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to load config: %v\n", err)
-		os.Exit(1)
-	}
-
-	if !cfg.Web.Enabled {
-		fmt.Println("Web UI is disabled in configuration")
-		os.Exit(1)
-	}
-
-	fmt.Printf("Web UI will be available at http://%s:%d\n", cfg.Web.Host, cfg.Web.Port)
-
-	// TODO: Start web server
-	fmt.Println("Web server implementation coming soon...")
 }
 
 func initProject() {
@@ -233,6 +207,9 @@ func initWeaviateStore(cfg *config.Config) (*storage.WeaviateStore, error) {
 }
 
 func initEmbeddings(cfg *config.Config) (*embeddings.Client, error) {
+	if cfg.Embeddings.Provider == "ollama" {
+		return embeddings.NewClientWithURL(cfg.Embeddings.Provider, cfg.Embeddings.Model, cfg.Embeddings.OllamaURL)
+	}
 	return embeddings.NewClient(cfg.Embeddings.Provider, cfg.Embeddings.Model)
 }
 
@@ -257,7 +234,7 @@ func initAIClient(cfg *config.Config) (memory.AIClient, error) {
 		}
 		return ai.NewOpenRouterClient(apiKey, cfg.AI.Model, cfg.AI.OpenRouterURL), nil
 	case "ollama":
-		return nil, fmt.Errorf("ollama provider not yet implemented")
+		return ai.NewOllamaClient(cfg.AI.OllamaURL, cfg.AI.Model), nil
 	default:
 		return nil, fmt.Errorf("unsupported AI provider: %s", cfg.AI.Provider)
 	}

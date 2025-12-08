@@ -10,7 +10,7 @@ Get alaala running in under 5 minutes!
 - **AI Provider** (Choose one):
   - OpenRouter API key (recommended - free tier available): https://openrouter.ai
   - Anthropic API key (Claude - best quality): https://console.anthropic.com
-  - Ollama (local AI - private): https://ollama.ai
+  - Ollama (local AI - completely private and free): https://ollama.ai
 
 ## Step 1: Install alaala
 
@@ -54,18 +54,32 @@ brew install colima docker
 # Start Colima
 colima start
 
-# Run Weaviate setup
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
+# Start Weaviate
+docker run -d \
+  --name weaviate \
+  -p 8080:8080 \
+  -e QUERY_DEFAULTS_LIMIT=25 \
+  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+  -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+  -e DEFAULT_VECTORIZER_MODULE=none \
+  weaviate/weaviate:latest
 ```
 
 ### Using Docker Desktop
 
 ```bash
-# Run Weaviate setup (Docker Desktop auto-starts)
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xGurg/alaala/main/scripts/setup-weaviate.sh)"
+# Start Weaviate (Docker Desktop auto-starts)
+docker run -d \
+  --name weaviate \
+  -p 8080:8080 \
+  -e QUERY_DEFAULTS_LIMIT=25 \
+  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+  -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+  -e DEFAULT_VECTORIZER_MODULE=none \
+  weaviate/weaviate:latest
 ```
 
-This will start a Weaviate container on `http://localhost:8080`.
+Weaviate will be available at `http://localhost:8080`.
 
 ## Step 3: Configure
 
@@ -87,18 +101,17 @@ export OPENROUTER_API_KEY="sk-or-v1-..."
 # Edit ~/.alaala/config.yaml and set:
 # ai:
 #   provider: openrouter
-#   model: anthropic/claude-3.5-sonnet
-#   # Or try other models:
-#   # model: openai/gpt-4-turbo
-#   # model: meta-llama/llama-3.1-70b-instruct
-#   # model: google/gemini-pro-1.5
+#   model: meta-llama/llama-3.1-8b-instruct:free  # Free tier
+#   # Or try: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo
 ```
 
-### Option C: Ollama (Local, Private)
+### Option C: Ollama (Local, Private, Free)
 
 ```bash
-# Install Ollama from https://ollama.ai
-# Then pull the models
+# Install Ollama
+brew install ollama
+
+# Pull models
 ollama pull llama3.1
 ollama pull nomic-embed-text
 
@@ -141,7 +154,7 @@ This creates `.alaala-project.json` and `~/.alaala/config.yaml`.
 }
 ```
 
-**Note:** Change to `ANTHROPIC_API_KEY` if using Claude, or remove `env` entirely if using Ollama (local).
+**Note:** Change to `ANTHROPIC_API_KEY` if using Anthropic Claude instead of OpenRouter.
 
 ## Step 5: Restart Cursor
 

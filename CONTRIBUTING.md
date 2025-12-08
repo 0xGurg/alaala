@@ -17,7 +17,12 @@ Thank you for your interest in contributing to alaala! We welcome contributions 
 
 3. **Setup Weaviate:**
    ```bash
-   ./scripts/setup-weaviate.sh
+   docker run -d \
+     --name weaviate \
+     -p 8080:8080 \
+     -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+     -e PERSISTENCE_DATA_PATH=/var/lib/weaviate \
+     weaviate/weaviate:latest
    ```
 
 4. **Build:**
@@ -112,12 +117,6 @@ GOOS=darwin GOARCH=amd64 go build -o bin/alaala-darwin-amd64 ./cmd/alaala
    - JSON export format
    - Markdown export
    - Import validation
-
-6. **Ollama Integration** (Documented, needs implementation)
-   - HTTP client for Ollama API
-   - Embeddings via Ollama (nomic-embed-text)
-   - Curation via Ollama (llama3.1, mistral, etc.)
-   - Configuration already documented in examples/config.yaml
 
 ### Low Priority
 

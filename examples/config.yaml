@@ -2,36 +2,31 @@
 # Copy this to ~/.alaala/config.yaml and customize
 
 storage:
-  weaviate_url: http://localhost:8080  # Docker Weaviate URL
+  weaviate_url: http://localhost:8080  # Docker Weaviate URL (required)
   sqlite_path: ~/.alaala/alaala.db
 
 ai:
-  provider: anthropic  # "anthropic", "openrouter", or "ollama" (local)
-  api_key: ${ANTHROPIC_API_KEY}  # Use environment variable or set directly (not needed for ollama)
+  provider: anthropic  # "anthropic", "openrouter", or "ollama"
+  api_key: ${ANTHROPIC_API_KEY}  # or ${OPENROUTER_API_KEY} (not needed for ollama)
   model: claude-3-5-sonnet-20241022  # Model name (provider-specific)
-  ollama_url: http://localhost:11434  # Only needed if using ollama
-  openrouter_url: https://openrouter.ai/api/v1  # Only needed if using openrouter (optional, uses default)
+  openrouter_url: https://openrouter.ai/api/v1  # Optional
+  ollama_url: http://localhost:11434  # Optional (default)
 
 embeddings:
-  provider: local  # "local", "ollama", or "openai"
+  provider: local  # "local" (placeholder) or "ollama" (real embeddings)
   model: all-MiniLM-L6-v2  # or "nomic-embed-text" for ollama
-  ollama_url: http://localhost:11434  # Only needed if using ollama
+  ollama_url: http://localhost:11434  # Optional (default)
 
 retrieval:
-  max_memories: 5  # Maximum memories to return in search
+  max_memories: 5  # Maximum memories to return
   min_importance: 0.3  # Minimum importance threshold (0-1)
-  include_graph_depth: 1  # Depth to traverse memory relationships
-
-web:
-  enabled: true
-  port: 8766
-  host: localhost
+  include_graph_depth: 1  # Follow memory relationships (0 = disabled)
 
 logging:
   level: info  # "debug", "info", "warn", "error"
   file: ~/.alaala/alaala.log
 
-# Example Ollama Configuration (Local, Private):
+# Example: Local AI with Ollama (fully private, no API costs)
 # ai:
 #   provider: ollama
 #   model: llama3.1
@@ -40,8 +35,12 @@ logging:
 #   provider: ollama
 #   model: nomic-embed-text
 #   ollama_url: http://localhost:11434
+#
+# Setup: brew install ollama
+#        ollama pull llama3.1
+#        ollama pull nomic-embed-text
 
-# Example OpenRouter Configuration (Multiple Models, Flexible):
+# Example OpenRouter Configuration (Multiple Models):
 # ai:
 #   provider: openrouter
 #   api_key: ${OPENROUTER_API_KEY}
@@ -50,13 +49,11 @@ logging:
 #   # model: openai/gpt-4-turbo         # Fast, reliable
 #   # model: meta-llama/llama-3.1-70b-instruct  # Cost-effective
 #   # model: google/gemini-pro-1.5      # Fast, cheap
-#   # model: mistralai/mistral-large    # European option
-#   openrouter_url: https://openrouter.ai/api/v1  # Optional
+#   # model: meta-llama/llama-3.1-8b-instruct:free  # Free tier!
 
 # Popular OpenRouter Models for Memory Curation:
-# - anthropic/claude-3.5-sonnet: Best quality, ~$3/$15 per 1M tokens
-# - openai/gpt-4-turbo: Fast & reliable, ~$10/$30 per 1M tokens
-# - meta-llama/llama-3.1-70b-instruct: Cost-effective, ~$0.50/$0.80 per 1M tokens
-# - google/gemini-pro-1.5: Fast & cheap, ~$1.25/$5 per 1M tokens
-# - mistralai/mistral-large: European option, ~$2/$6 per 1M tokens
-
+# - meta-llama/llama-3.1-8b-instruct:free - Best free option
+# - anthropic/claude-3.5-sonnet - Best quality, ~$3/$15 per 1M tokens
+# - openai/gpt-4-turbo - Fast & reliable, ~$10/$30 per 1M tokens
+# - meta-llama/llama-3.1-70b-instruct - Cost-effective, ~$0.50/$0.80 per 1M tokens
+# - google/gemini-flash-1.5:free - Fast & free

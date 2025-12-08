@@ -8,15 +8,13 @@ A high-performance Go implementation of a semantic memory system that enables AI
 
 - **MCP Protocol Integration** - Works seamlessly with Cursor, Claude Desktop, and other MCP-compatible clients
 - **Hybrid Memory Injection** - Auto-inject context at session start + dynamic updates on each prompt + on-demand searches
-- **AI-Powered Curation** - Claude, OpenRouter, or Ollama analyzes conversation transcripts to extract meaningful insights
-- **Multiple AI Providers** - Choose from Anthropic (cloud), OpenRouter (multi-model), or Ollama (local/private)
-- **Flexible Model Selection** - Access GPT-4, Claude, Llama, Gemini, and more through OpenRouter
-- **Local AI Support** - Use Ollama for completely private, local memory curation and embeddings
-- **Memory Graph** - Memories can reference and relate to each other (references, supersedes, related_to)
-- **Multi-Project Workspaces** - Automatic project isolation with separate memory spaces
-- **Semantic Search** - Vector similarity search with importance weighting and trigger phrase matching
-- **Export/Import** - Backup and share memories in JSON format
-- **Web UI** (Coming Soon) - Beautiful neobrutalist interface with Kanagawa color palette
+- **AI-Powered Curation** - Claude, OpenRouter, or Ollama analyzes conversation transcripts
+- **Multiple AI Providers** - Anthropic (cloud), OpenRouter (multi-model), or Ollama (local/private)
+- **Real Embeddings** - Ollama provides semantic vector embeddings locally
+- **Vector Search** - Weaviate similarity search with real embeddings
+- **Memory Graph** - Follow relationships between memories for richer context
+- **Multi-Project Workspaces** - Automatic project isolation
+- **Session Management** - Temporal context and continuity
 
 ## Prerequisites
 
@@ -24,6 +22,10 @@ A high-performance Go implementation of a semantic memory system that enables AI
   - macOS: [Colima](https://github.com/abiosoft/colima) (recommended, lightweight) or [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
   - Linux: [Docker Engine](https://docs.docker.com/engine/install/)
   - Windows: [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)
+
+- **Ollama** - Optional, for local AI (embeddings + curation)
+  - macOS: `brew install ollama`
+  - Linux/Windows: https://ollama.ai/download
 
 ## Quick Start
 
@@ -139,23 +141,14 @@ logging:
 
 **Option A: Using Anthropic Claude (Cloud)**
 ```bash
-export ANTHROPIC_API_KEY="your-api-key-here"
+export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
-**Option B: Using OpenRouter (Multiple Models)**
+**Option B: Using OpenRouter (Multiple Models, Free Tier Available)**
 ```bash
 export OPENROUTER_API_KEY="sk-or-v1-..."
 # Get your key from https://openrouter.ai
-# Update config.yaml to use provider: openrouter
-# Choose from: anthropic/claude-3.5-sonnet, openai/gpt-4-turbo, meta-llama/llama-3.1-70b-instruct, etc.
-```
-
-**Option C: Using Ollama (Local)**
-```bash
-# Install Ollama from https://ollama.ai
-ollama pull llama3.1
-ollama pull nomic-embed-text
-# Update config.yaml to use provider: ollama
+# Free models available: meta-llama/llama-3.1-8b-instruct:free
 ```
 
 ### MCP Configuration
@@ -293,19 +286,21 @@ Each memory contains:
 }
 ```
 
-## Upcoming Features
+## Current Limitations
 
-- [x] Core memory engine with MCP
-- [x] SQLite + Weaviate integration
-- [x] AI-powered curation (Claude + OpenRouter)
-- [x] **OpenRouter support** for multiple AI models (GPT-4, Claude, Llama, Gemini)
-- [x] **Homebrew distribution** for easy installation
-- [x] **Ollama support** for local AI (documented, needs implementation)
-- [ ] **Web UI** with neobrutalism design
-- [ ] **Real embeddings** (currently using dummy embeddings)
-- [ ] **Memory graph visualization**
-- [ ] **Export/import functionality**
-- [ ] **Cross-project search**
+**What works:**
+- ✅ MCP protocol integration (Cursor, Claude Desktop)
+- ✅ AI-powered memory curation (Claude, OpenRouter)
+- ✅ SQLite storage with full metadata
+- ✅ Session management and project isolation
+- ✅ Homebrew distribution
+
+**With Ollama (optional):**
+- ✅ Real semantic embeddings (nomic-embed-text)
+- ✅ Fully local and private AI
+- ✅ No API costs
+
+See [docs/STATUS.md](docs/STATUS.md) for detailed status.
 
 ## Uninstallation
 

@@ -6,8 +6,9 @@ import (
 
 // Client handles text embedding generation
 type Client struct {
-	provider string
-	model    string
+	provider       string
+	model          string
+	ollamaEmbedder *OllamaEmbedder
 }
 
 // NewClient creates a new embeddings client
@@ -18,15 +19,33 @@ func NewClient(provider, model string) (*Client, error) {
 	}, nil
 }
 
+// NewClientWithURL creates a new embeddings client with custom URL (for Ollama)
+func NewClientWithURL(provider, model, url string) (*Client, error) {
+	client := &Client{
+		provider: provider,
+		model:    model,
+	}
+
+	// For Ollama, create the actual embedder
+	if provider == "ollama" {
+		client.ollamaEmbedder = NewOllamaEmbedder(url, model)
+	}
+
+	return client, nil
+}
+
 // Embed generates an embedding vector for the given text
 func (c *Client) Embed(text string) ([]float32, error) {
 	switch c.provider {
 	case "local":
 		return c.embedLocal(text)
+	case "ollama":
+		if c.ollamaEmbedder == nil {
+			c.ollamaEmbedder = NewOllamaEmbedder("", c.model)
+		}
+		return c.ollamaEmbedder.Embed(text)
 	case "openai":
 		return nil, fmt.Errorf("OpenAI embeddings not yet implemented")
-	case "ollama":
-		return nil, fmt.Errorf("Ollama embeddings not yet implemented")
 	default:
 		return nil, fmt.Errorf("unknown embeddings provider: %s", c.provider)
 	}
